@@ -1,0 +1,111 @@
+<html>
+  <head>
+
+    <script src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
+    <script src="https://use.fontawesome.com/6791ba42d9.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/oauth-signature-js/dist/oauth-signature.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <script src="js/model.js"></script>
+  </head>
+  <body>
+  <div id="title-bar"><h1>Great Restaurants in Austin</h1></div>
+  <hr style="padding: 0px; margin: 0px;">
+  <div id="panel&map">
+    <div id="panel">
+      <ul>
+        <li>
+
+        <h3 class="find">
+           <i class="fa fa-filter" aria-hidden="true"></i> Filter restaurant by name</h3>
+          <input type="text" class=" filter" id="filter" name="filter"></td>
+        </li>
+        <hr>
+
+         <li>
+          <h3 class="find">
+            Directions to...<i class="fa fa-plus towards " aria-hidden="true"></i></h3>
+            <table class="go-to">
+            <tr>
+            <td><strong class=" find">From: </strong></td><td><input style="width: 100%;" type="text" class=" find" name="filter" id="directions2-start" placeholder="Enter starting address"></td></tr>
+            </tr>
+
+
+            <tr>
+            <td><strong class="find">To: </strong></td>
+            <td><select style="width: 100%;" class="find" id="directions2-end" data-bind="foreach: restaurantList">
+        <option class="place-to" data-bind="text: title, attr: {value: street, cityCountry}"></option>
+
+      </select></td>
+      </tr><tr><td></td><td><button id="get-directions-to">Get Directions</button></td></tr>
+</table>
+
+        </li>
+        <hr>
+              <li>
+          <h3 class="find">
+            Directions from...<i class="fa fa-plus away" aria-hidden="true"></i></h3>
+            <table class="get-from">
+
+               <tr>
+            <td><strong class="find">From: </strong></td>
+            <td><select style="width: 100%;" class="find" id="directionsfrom-start" data-bind="foreach: restaurantList">
+        <option class="place-to" data-bind="text: title, attr: {value: street, cityCountry}"></option>
+
+      </select></td>
+      </tr>
+            <tr>
+            <td><strong class=" find">To: </strong></td><td><input style="width: 100%;" type="text" class=" find" id="directionsfrom-end" name="filter" placeholder="Enter ending address"></td></tr>
+            </tr>
+            <tr><td></td><td><button id="get-directions-from">Get Directions</button></td></tr>
+
+
+</table>
+
+        </li>
+
+       </ul>
+        <hr>
+<ul id="restaurant-list" data-bind="foreach: restaurantList">
+    <li class="restaurant-name" data-bind="text: title, click: $parent.changeRestaurant"></li>
+    <hr class="list">
+</ul>
+<button id="back">Back</button>
+<div id="show-restaurant" data-bind="with: selectedRestaurant">
+    <h1 id="selected-name" data-bind="text: title"></h1>
+    <div id="hours"></div>
+
+    <br>
+    <div data-bind="text: street"></div>
+    <div data-bind="text: cityCountry"></div>
+    <div id="phone"></div>
+    <img id="featured-food" src="" data-bind="attr: {src: imgSrc}">
+    <div id="category">Category: </div>
+    <div id="price-range">Price range: </div>
+    <div id="menu"></div>
+
+<div id="yelp-review"></div>
+
+<div id="foursquare"></div>
+<ul id="tips-list"></ul>
+</div>
+
+
+
+    </div>
+    <div id="right-panel">
+      <button id="back-to-list">Go Back</button>
+    </div>
+    <div id="map"></div>
+    </div>
+
+   <script src="http://knockoutjs.com/downloads/knockout-3.0.0.debug.js" type="text/javascript"></script>
+   <script src="js/map.js"></script>
+   <script src="js/yelp&foursquareapi.js"></script>
+   <script src="js/viewModel.js"></script>
+    <script async defer
+        src=
+        "https://maps.googleapis.com/maps/api/js?key=AIzaSyA5tTf9CYQpNJS4fzHJ2xHPbqlblu9c3PY&libraries=geometry&v=3&callback=initMap">
+    </script>
+  </body>
+</html>

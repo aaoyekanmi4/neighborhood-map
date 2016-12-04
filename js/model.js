@@ -1,3 +1,4 @@
+//Info for both map markers and side panel for each restaurant
 var locations = [{
           title: 'Polvos',
           location: {lat: 30.245371, lng: -97.757424},

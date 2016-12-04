@@ -6,6 +6,11 @@ body {
     padding: 0;
 }
 
+#first-hr {
+    padding: 0px;
+    margin: 0px;
+
+}
 ul {
     padding: 0px;
     list-style-type: none;
@@ -19,33 +24,33 @@ li.restaurant-name {
 input,
 select,
 {
-  height:26px;
-  width:70%;
+    height:26px;
+    width:70%;
 }
 
 #loc {
- height:26px;
- width: 80%;
+    height:26px;
+    width: 80%;
 }
 
 button {
-height:26px;
+    height:26px;
 }
 
 
 #title-bar {
-height:55px;
-width: 100%;
-background-color: #a5a5e3;
-padding-left: 2%;
+    height:55px;
+    width: 100%;
+    background-color: #a5a5e3;
+    padding-left: 2%;
 }
 
 h1 {
-margin-bottom: 0px;
-padding-top: 10px;
+    margin-bottom: 0px;
+    padding-top: 10px;
 }
 
-.near{
+.near {
     margin-top:17px;
 }
 
@@ -90,6 +95,13 @@ li.restaurant-name,
     color: blue;
 }
 
+#directions2-start,
+#directions2-end,
+#directionsfrom-start,
+#directionsfrom-end {
+    width: 100%;
+}
+
 img#featured-food {
     width: 250px;
 }
@@ -111,14 +123,13 @@ select {
     height: 26px;
 }
 
-.get-from{
+.get-from {
     display:none;
 }
 
 #selected-name {
     margin-top: 10px;
 }
-
 
 #menu,
 .user-rating {
@@ -130,7 +141,7 @@ select {
     margin-top: 10px;
 }
 
-button[type=submit]{
+button[type=submit] {
     border-radius: 5px;
     color: white;
     background-color: orange;
@@ -142,9 +153,10 @@ button[type=submit]{
 #get-directions-to {
     float:right;
 }
-   #right-panel {
-        height: 100%;
-        float: right;
-        width: 390px;
-        overflow: auto;
-      }
+
+#right-panel {
+    height: 100%;
+    float: right;
+    width: 390px;
+    overflow: auto;
+}

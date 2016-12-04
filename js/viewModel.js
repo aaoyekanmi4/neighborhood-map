@@ -1,30 +1,4 @@
-
-
-
-    $(".towards").click(function() {
-        if ( $( ".go-to" ).is( ":hidden" ) ) {
-    $( ".go-to" ).show()
-  } else {
-    $( ".go-to" ).slideUp("slow");
-  };
-      $(this).toggleClass("fa fa-minus")
-      $(this).toggleClass("fa fa-plus");
-    });
-
-     $(".away").click(function() {
-        if ( $( ".get-from" ).is( ":hidden" ) ) {
-    $( ".get-from" ).show()
-  } else {
-    $( ".get-from" ).slideUp("slow");
-  };
-      $(this).toggleClass("fa fa-minus")
-      $(this).toggleClass("fa fa-plus");
-    });
-
-
-
-
-
+//making ko observables for members of locations object in model.js
 var Restaurant = function (data){
     this.title = ko.observable(data.title);
     this.location = ko.observable(data.location);
@@ -49,43 +23,40 @@ var ViewModel = function () {
     this.selectedRestaurant = ko.observable();
 
 
-$("#back").hide()
+    $("#back").hide()
+    //function for what happens when a restaurant is clicked in side panel
+    this.changeRestaurant = function(clickedRestaurant) {
+      //Hide other restaurants and show back button
+      $("#restaurant-list").hide()
+      self.selectedRestaurant(clickedRestaurant)
+      var yelpName = clickedRestaurant.yelpFormat()
+      var foursquareId = clickedRestaurant.foursquare_id()
 
-this.changeRestaurant = function(clickedRestaurant) {
+      //Set value in filter to blank
+      $("#filter").val("")
 
-$("#restaurant-list").hide()
-self.selectedRestaurant(clickedRestaurant)
-var yelpName = clickedRestaurant.yelpFormat()
-var foursquareId = clickedRestaurant.foursquare_id()
-$("#filter").val("")
-//function from yelp&foursquareApi
-getApiInfo(yelpName, foursquareId)
+      //function from yelp&foursquareApi to show info for restaurant
+      getApiInfo(yelpName, foursquareId)
 
-
-$("#back").show()
-
-
-
-};
-
-
-
-$("#back").click(function() {
-$(".restaurant-name").show()
-$("#restaurant-list").show()
-self.selectedRestaurant(null);
-
-$(this).hide()
-$("#area").text('')
-$("#foursquare").text('')
-$("#tips-list").text('')
-$(".list").show()
-
-
-});
+      //Show back button
+      $("#back").show()
 
 
 
+    };
+    //Reset list when restaurant is clicked
+    $("#back").click(function() {
+        $(".restaurant-name").show()
+        $("#restaurant-list").show()
+        self.selectedRestaurant(null);
+        $(this).hide()
+        $("#area").text('')
+        $("#foursquare").text('')
+        $("#tips-list").text('')
+        $(".list").show()
+
+
+    });
 
 };
 

@@ -38,8 +38,8 @@ function foursquareVersion(){
     if(mm<10){
         mm='0'+mm
     }
-    var today = yyyy+dd+mm;
-    return today;
+    var today = yyyy.toString()+mm.toString()+dd.toString();
+    return today
 };
 
 //foursquare api requirements
@@ -69,7 +69,7 @@ function getApiInfo(yelpName, foursquareId) {
             var user = response.reviews[0].user.name
             var userRating = response.reviews[0].rating_image_small_url
 
-            $("#category").append(category)
+            $("#category").append('Category: ' + category)
 
 
              $("#selected-name").append('<img id="rating" src="' + overallRating + '">')
@@ -85,7 +85,8 @@ function getApiInfo(yelpName, foursquareId) {
     });
     //get venue id and generate foursquare url for venue detail API
     var version = foursquareVersion()
-    var foursquareUrl = 'https://api.foursquare.com/v2/venues/' + foursquareId + '?client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET + '&v=' + version
+
+    var foursquareUrl = 'https://api.foursquare.com/v2/venues/' + foursquareId + '?client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET + '&v=' + version + '&m=foursquare'
     console.log(foursquareUrl)
     $.ajax({
         url: foursquareUrl,
@@ -100,10 +101,10 @@ function getApiInfo(yelpName, foursquareId) {
                 $("#hours").append(status)
             }
 
-            $("#price-range").append(data.response.venue.price.message)
+            $("#price-range").append('Price Range: ' + priceRange)
             $("#menu").append('<form action="' + menu + '" target="_blank"><button id="menu-button" type="submit">View Menu <i class="fa fa-cutlery" aria-hidden="true"></i></button></form>')
             $("#foursquare").append('<h3><i class="fa fa-foursquare" aria-hidden="true"></i> Featured foursquare tips:</h3>')
-            for (var i = 0; i < 3; i++){
+            for (var i = 0; i < 10; i++){
                 $("#tips-list").append('<li><p>' + tips[i].text + '</p><p>Likes: ' + tips[i].agreeCount +'</p></li>')
             }
 

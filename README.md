@@ -18,6 +18,8 @@ The model.js file contains a javascript object for all the restaurants in the ap
 
 The viewModel.js file uses Knockout to display each restaurant from the model in the html of index.html.
 
+The oauth-signature-js file contains necessary functions for the oauth1 used with the foursquare API.
+
 The index.html file pulls in these various javascript files to display the page.
 
 Attributions:

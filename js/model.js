@@ -1,4 +1,10 @@
 //Info for both map markers and side panel for each restaurant
+
+//location found using https://google-developers.appspot.com/maps/documentation/utils/geocoder/
+
+//foursquare_id found using foursquare API explorer
+//https://developer.foursquare.com/docs/explore#req=venues/search%3Fll%3D40.7,-74
+
 var locations = [{
           title: 'Polvos',
           location: {lat: 30.245371, lng: -97.757424},
@@ -18,7 +24,7 @@ var locations = [{
         },{
           title: "Torchy's",
           location: {lat: 30.250744, lng:-97.754281},
-          imgSrc:"http://www.samplingstlouis.com/wp-content/uploads/2013/03/DSC_0057-1024x682.jpg",
+          imgSrc:"http://www.trendengel.com/wp-content/uploads/2016/03/DSC_0057.jpg",
           street:"1311 S 1st St",
           cityCountry:"Austin, TX 78704, USA",
           yelpFormat: "torchys-tacos-austin",
@@ -56,12 +62,13 @@ var locations = [{
           yelpFormat: "cabo-bobs-burritos-austin",
           foursquare_id:"4a99bd43f964a520313020e3"
         },{
-          title: "Yinz Hungry?",
-          location: {lat: 30.146475, lng:-97.832376},
-          imgSrc:"https://pbs.twimg.com/media/Ce6qYZHUsAAUwl0.png",
-          street:"11907 Manchaca Rd",
-          cityCountry:"Austin, TX 78748, USA",
-          yelpFormat: "yinz-hungry-austin",
+          title: "Home Slice Pizza",
+          location: {lat: 30.249225, lng:-97.749515},
+          imgSrc:"https://cmga360dining.files.wordpress.com/2015/09/tmc-xlpizzahomeslicepephear.jpg?w=640&h=427",
+          street:"1415 S Congress St",
+          cityCountry:"Austin, TX 78704",
+          yelpFormat: "home-slice-pizza-austin",
+          foursquare_id: "43d1d4e9f964a520072e1fe3"
         },{
           title:"Casa Garcias",
           location: {lat: 30.201823, lng:-97.805891},

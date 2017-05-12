@@ -4,9 +4,8 @@ To Run:
 
 Open index.html in a browser.
 
-Click on restaurant name to see Yelp and Foursquare information.
+Click on a restaurant name to see Yelp and Foursquare information.
 
-Use the Directions sections to get directions to and from restaurants.
 
 About:
 
@@ -25,3 +24,4 @@ The index.html file pulls in these various javascript files to display the page.
 Attributions:
 Much of the code for the map.js file came from the course "Google Maps APIs"
 
+Google Maps, Yelp, and Foursquare API documentation.

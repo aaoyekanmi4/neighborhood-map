@@ -87,7 +87,7 @@ function getApiInfo(yelpName, foursquareId) {
     var version = foursquareVersion()
 
     var foursquareUrl = 'https://api.foursquare.com/v2/venues/' + foursquareId + '?client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET + '&v=' + version + '&m=foursquare'
-    console.log(foursquareUrl)
+
     $.ajax({
         url: foursquareUrl,
         dataType:'jsonp',
@@ -104,11 +104,19 @@ function getApiInfo(yelpName, foursquareId) {
             $("#price-range").append('Price Range: ' + priceRange)
             $("#menu").append('<form action="' + menu + '" target="_blank"><button id="menu-button" type="submit">View Menu <i class="fa fa-cutlery" aria-hidden="true"></i></button></form>')
             $("#foursquare").append('<h3><i class="fa fa-foursquare" aria-hidden="true"></i> Featured foursquare tips:</h3>')
-            for (var i = 0; i < 10; i++){
+
+            for (var i = 0; i < 5; i++){
                 $("#tips-list").append('<li><p>' + tips[i].text + '</p><p>Likes: ' + tips[i].agreeCount +'</p></li>')
             }
 
 
         }
     });
+}
+
+function clearApiInfo () {
+    $("#area").text('')
+    $("#foursquare").text('')
+    $("#tips-list").text('')
+    $(".list").show()
 }

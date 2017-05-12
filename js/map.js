@@ -7,9 +7,7 @@ var map;
 //Constructor for Google map
 function initMap() {
 
-//Variables for directions
-  var directionsDisplay = new google.maps.DirectionsRenderer;
-  var directionsService = new google.maps.DirectionsService;
+
 //Night mode map style
   var styledMapType = new google.maps.StyledMapType(
     [{elementType: 'geometry', stylers: [{color: '#242f3e'}]},
@@ -110,19 +108,21 @@ function initMap() {
   map.mapTypes.set('styled_map', styledMapType);
   map.setMapTypeId('styled_map');
 
-  directionsDisplay.setMap(map);
-  directionsDisplay.setPanel(document.getElementById('right-panel'));
 
+  bounds = new google.maps.LatLngBounds();
 
-  var bounds = new google.maps.LatLngBounds();
 
   // The following group uses the locations array to create an array of markers on initialize.
   for (var i = 0; i < locations.length; i++) {
+
     // Get the position from the location array.
     var position = locations[i].location;
     var title = locations[i].title;
     var street = locations[i].street;
     var imgSrc = locations[i].imgSrc;
+
+
+
     // Create a marker per location, and put into markers array.
     var marker = new google.maps.Marker({
       map: map,
@@ -134,6 +134,8 @@ function initMap() {
       id: i
     });
 
+
+
     // Push the marker to our array of markers.
     markers.push(marker);
 
@@ -141,6 +143,9 @@ function initMap() {
 
 
     map.fitBounds(bounds);
+}
+    //Create info window
+      infowindow = new google.maps.InfoWindow();
 
    //Show window and set center when a marker is clicked
     marker.addListener('click', function() {
@@ -151,174 +156,9 @@ function initMap() {
 
   };
 
-  //Center map on clicked value and remove all other markers
-  $(".restaurant-name").click(selectRestaurant)
-
-  function selectRestaurant() {
-      for (var i = 0; i < markers.length; i++) {
-          if (markers[i].title === $(this).text()){
-              map.setCenter(markers[i].position);
-          }
-          else {
-              markers[i].setMap(null);
-          }
-      }
-  };
 
 
 
-//Select which markers and places are shown using filter box
-$("#filter").keyup(function(){
-  var val = $(this).val().toLowerCase();
-  var places = $(".restaurant-name")
-
-  places.each(function(){
-  var text = $(this).text().toLowerCase()
-  if (val ===""){
-    $(".list").show()
-    $(".restaurant-name").show()
-    for (var i = 0; i < markers.length; i++) {
-      markers[i].setMap(map);
-      bounds.extend(markers[i].position);
-    }
-    map.fitBounds(bounds);
-  }
-  else if (text.startsWith(val)!== true){
-    $(".list").hide()
-    $(this).hide()
-    for (var i = 0; i < markers.length; i++) {
-      if (markers[i].title === $(this).text()){
-      markers[i].setMap(null);
-      }
-    }
-    } else {
-    $(this).show()
-    }
-  });
-
-  if($('#restaurant-list').children(':visible').length == 0) {
-    $('#restaurant-list').append("<li id='none'> No names start with that</li>")
-    } else { $("#none").remove();
-    }
-  });
-
-
-
-  //Functions to toggle bounce animations and windows on hover
-
-  function startBounce(){
-    for (var i = 0; i < markers.length; i++) {
-      if (markers[i].title === $(this).text()){
-          markers[i].setAnimation(google.maps.Animation.BOUNCE)
-          populateInfoWindow(markers[i], infowindow)
-          }
-      }
-    };
-
-    function stopBounce(){
-        for (var i = 0; i < markers.length; i++) {
-            if (markers[i].title === $(this).text()){
-                markers[i].setAnimation(null)
-            }
-
-        }
-    };
-
-  //Toggle bounce and open window on marker when name in panel is hovered over
-  $(".restaurant-name").hover(startBounce, stopBounce);
-
-  // Put markers back when back button clicked
-  $("#back").click(function(){
-  $(this).hide();
-  for (var i = 0; i < markers.length; i++) {
-      markers[i].setMap(map);
-      bounds.extend(markers[i].position);
-  }
-  map.fitBounds(bounds);
-});
-
-  //Make info window for each marker
-  var infowindow = new google.maps.InfoWindow();
-  function populateInfoWindow(marker, infowindow) {
-    // Check to make sure the infowindow is not already opened on this marker.
-    if (infowindow.marker != marker) {
-      infowindow.marker = marker;
-      infowindow.setContent('<div>' + marker.title + '</div><div>' + marker.street +'</div');
-      infowindow.open(map, marker);
-      // Make sure the marker property is cleared if the infowindow is closed.
-      infowindow.addListener('closeclick', function() {
-        infowindow.marker = null;
-      });
-    }
-  };
-
-//Hide directions panel
-$("#right-panel").hide()
-//Functions for directions
-var getThere = function() {
-  directionsTo(directionsService, directionsDisplay);
-};
-var getBack = function(){
-  directionsFrom(directionsService, directionsDisplay);
-};
-document.getElementById('get-directions-to').addEventListener('click', getThere);
-document.getElementById('get-directions-from').addEventListener('click', getBack);
-//Close out direction panel when go back button clicked
-$("#back-to-list").click(function(){
-  $("#right-panel").animate({width:'toggle'},350);
-  $("#panel").animate({width:'toggle'},350);
-  directionsDisplay.setDirections({routes: []});
-  for (var i = 0; i < markers.length; i++) {
-    markers[i].setMap(map);
-    bounds.extend(markers[i].position);
-  }
-  map.fitBounds(bounds);
-});
-//Get directions from a restaurant to an entered lcocation
-function directionsFrom(directionsService, directionsDisplay) {
-  var start = document.getElementById('directionsfrom-start').value;
-  for (var i = 0; i < markers.length; i++) {
-    markers[i].setMap(null);
-  }
-  var end = document.getElementById('directionsfrom-end').value;
-  directionsService.route({
-    origin: start,
-    destination: end,
-    travelMode: 'DRIVING'
-  }, function(response, status) {
-  if (status === 'OK') {
-  directionsDisplay.setDirections(response);
-  $("#right-panel").animate({width:'toggle'},350);
-  $("#panel").animate({width:'toggle'},350);
-  } else {
-  window.alert('Directions request failed due to ' + status);
-  }
-  });
-  };
-//Get directions to a restaurant from an entered location
-  function directionsTo(directionsService, directionsDisplay) {
-  var start = document.getElementById('directions2-start').value;
-  for (var i = 0; i < markers.length; i++) {
-    markers[i].setMap(null);
-  }
-  var end = document.getElementById('directions2-end').value;
-  directionsService.route({
-    origin: start,
-    destination: end,
-    travelMode: 'DRIVING'
-  }, function(response, status) {
-    if (status === 'OK') {
-      directionsDisplay.setDirections(response);
-
-       $("#right-panel").animate({width:'toggle'},350);
-       $("#panel").animate({width:'toggle'},350);
-
-    } else {
-      window.alert('Directions request failed due to ' + status);
-    }
-  });
-}
-}
 
 
 

@@ -143,7 +143,7 @@ function initMap() {
 
 
     map.fitBounds(bounds);
-}
+
     //Create info window
       infowindow = new google.maps.InfoWindow();
 
@@ -155,6 +155,8 @@ function initMap() {
     });
 
   };
+
+};
 
 
 

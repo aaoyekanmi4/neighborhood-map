@@ -164,14 +164,18 @@ button[type=submit] {
 @media screen and (max-width: 900px) {
 
 #map {
-height: 50%;
+height: 350px;
 width: 100%;
+position: relative;
 
 }
 #panel {
     width:100%;
-    position: absolute;
+    float:none;
     bottom: 0;
+    position: absolute;
+    top: 400px;
+    height:30%;
 
 }
 }

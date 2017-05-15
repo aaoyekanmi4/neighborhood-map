@@ -118,5 +118,5 @@ function clearApiInfo () {
     $("#area").text('')
     $("#foursquare").text('')
     $("#tips-list").text('')
-    $(".list").show()
+
 }

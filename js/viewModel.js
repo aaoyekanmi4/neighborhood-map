@@ -1,3 +1,19 @@
+//function to create infowindow above marker
+function populateInfoWindow(marker, infowindow) {
+
+    // Check to make sure the infowindow is not already opened on this marker.
+    if (infowindow.marker != marker) {
+        infowindow.marker = marker;
+        infowindow.setContent("<div>" + marker.title + "</div><div>" + marker.street +"</div>");
+        infowindow.open(map, marker);
+
+        // Make sure the marker property is cleared if the infowindow is closed.
+        infowindow.addListener("closeclick", function() {
+          infowindow.marker = null;
+        });
+    }
+}
+
 
 //Make ko observables for members of locations object in model.js
 var Restaurant = function (data){
@@ -8,173 +24,161 @@ var Restaurant = function (data){
     this.cityCountry = ko.observable(data.cityCountry);
     this.yelpFormat = ko.observable(data.yelpFormat);
     this.foursquare_id = ko.observable(data.foursquare_id)
-};
- function populateInfoWindow(marker, infowindow) {
+}
 
-    // Check to make sure the infowindow is not already opened on this marker.
-    if (infowindow.marker != marker) {
-      infowindow.marker = marker;
-      infowindow.setContent('<div>' + marker.title + '</div><div>' + marker.street +'</div');
-      infowindow.open(map, marker);
-
-      // Make sure the marker property is cleared if the infowindow is closed.
-      infowindow.addListener('closeclick', function() {
-        infowindow.marker = null;
-      });
-    }
-  };
-
-
-
-
+//viewmodel for knockout
 var ViewModel = function () {
 
-
-
+    //setting self variable to refer to viewmodel
     var self = this;
 
-      self.startBounce = function (place){
-    for (var i = 0; i < markers.length; i++) {
-      if (markers[i].title === place.title()){
+    //create observable with value in filter input box set to blank
+    self.filterValue = ko.observable("");
 
-          markers[i].setAnimation(google.maps.Animation.BOUNCE)
-          populateInfoWindow(markers[i], infowindow)
-          }
-      }
-    };
+    //set restaurant list's visibility to true
+    self.listVisible = ko.observable(true);
 
+    //set back buttons visibilty to false
+    self.showBackButton = ko.observable(false);
+
+    //variable for restaurant when clicked
+    self.selectedRestaurant = ko.observable();
+
+    //functions to animate marker's location on hover of restaurant name
+    //place refers to a particular restaurant in restaurant list
+
+    //for mouseover
+    self.startBounce = function (place){
+        for (var i = 0; i < markers.length; i++) {
+            if (markers[i].title === place.title()){
+                markers[i].setAnimation(google.maps.Animation.BOUNCE)
+                populateInfoWindow(markers[i], infowindow)
+            }
+        }
+    }
+
+    //for mouseout
     self.stopBounce = function (place){
         for (var i = 0; i < markers.length; i++) {
             if (markers[i].title === place.title()){
                 markers[i].setAnimation(null)
             }
-
         }
-    };
+    }
 
-
-
-    self.filterValue = ko.observable("");
-    self.listVisible = ko.observable(true);
-
-
-self.showBackButton = ko.observable(false);
-
-    //Create an observable array of the restaurants in locations list
-
-
+//Function to determine restaurant list and markers shown based on value in filter input box
     self.generateList = ko.computed(function() {
 
-if (self.filterValue() === ""){
+        if (self.filterValue() === ""){
 
-  self.restaurantList = ko.observableArray([]);
-   for (var i = 0; i < markers.length; i++) {
-          markers[i].setMap(map);
+            self.restaurantList = ko.observableArray([]);
+
+            //put markers on map for each marker in marker array
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(map);
+            }
+
+            //create new restaurant using restaurant variable and push into restaurant list array
+            locations.forEach(function (location) {
+                self.restaurantList().push( new Restaurant (location));
+            });
+
+            return self.restaurantList()
 
         }
 
-     locations.forEach(function (location) {
+        else {
+            var filteredRestaurants = []
 
-        self.restaurantList().push( new Restaurant (location));
+            locations.forEach(function (location) {
 
+                var lowerCaseValue = self.filterValue().toLowerCase();
 
-      });
-     return self.restaurantList()
+                var lowerCaseTitle = location.title.toLowerCase();
 
-}
+                if (lowerCaseTitle.startsWith(lowerCaseValue) == true) {
+                    filteredRestaurants.push(new Restaurant (location));
 
-else {
+                    for (var i = 0; i < markers.length; i++) {
+                        var markerTitle = markers[i].title.toLowerCase();
+                        if (markerTitle.startsWith(lowerCaseValue) == true ){
 
-var filteredRestaurants = []
-      locations.forEach(function (location) {
-        var lowerCaseValue = self.filterValue().toLowerCase()
-        var lowerCaseTitle = location.title.toLowerCase()
+                            markers[i].setMap(map);
+                            bounds.extend(markers[i].position);
+                            map.fitBounds(bounds);
+                        }
+                    }
 
+                }
 
-   if (lowerCaseTitle.startsWith(lowerCaseValue) == true) {
- filteredRestaurants.push(new Restaurant (location));
+                else {
+                    for (var i = 0; i < markers.length; i++) {
+                        var markerTitle = markers[i].title.toLowerCase();
+                        if (markerTitle.startsWith(lowerCaseValue) !== true ){
+                            markers[i].setMap(null);
+                        }
+                    }
+                }
+            });
 
-for (var i = 0; i < markers.length; i++) {
-          var markerTitle = markers[i].title.toLowerCase()
-      if (markerTitle.startsWith(lowerCaseValue) == true ){
-
-       markers[i].setMap(map);
-       bounds.extend(markers[i].position);
-       map.fitBounds(bounds);
-
-
-     }
-     }
-
-   }
-   else {
-    for (var i = 0; i < markers.length; i++) {
-      var markerTitle = markers[i].title.toLowerCase()
-if (markerTitle.startsWith(lowerCaseValue) !== true ){
-markers[i].setMap(null);
-}
-
-   }
- }
- });
-
-self.restaurantList(filteredRestaurants);
-  return self.restaurantList()
-
-
- }
-
- });
-
-
-
-    self.selectedRestaurant = ko.observable();
-
+            self.restaurantList(filteredRestaurants);
+            return self.restaurantList()
+        }
+    });
 
 
     //function for what happens when a restaurant is clicked in side panel
-    this.changeRestaurant = function(clickedRestaurant) {
-      //Hide other restaurants and show back button
-      self.listVisible(!self.listVisible());
-      self.selectedRestaurant(clickedRestaurant)
-for (var i = 0; i < markers.length; i++) {
-          if (markers[i].title === clickedRestaurant.title()){
-              map.setCenter(markers[i].position);
-          }
-          else {
-              markers[i].setMap(null);
-          }
-      }
-      var yelpName = clickedRestaurant.yelpFormat()
-      var foursquareId = clickedRestaurant.foursquare_id()
+    self.changeRestaurant = function(clickedRestaurant) {
 
-      //Set value in filter to blank
-      self.filterValue("");
+        //hide other restaurants and show back button
+        self.listVisible(!self.listVisible());
+        self.showBackButton(!self.showBackButton());
 
-      //function from yelp&foursquareApi to show info for restaurant
-      getApiInfo(yelpName, foursquareId)
+        //Set value in filter to blank
+        self.filterValue("");
 
-      //Show back button
-      self.showBackButton(!self.showBackButton());
+        //use ko observable with "with" binding to view info for clicked location
+        self.selectedRestaurant(clickedRestaurant)
 
+        //show marker of clicked location only
+        for (var i = 0; i < markers.length; i++) {
+            if (markers[i].title === clickedRestaurant.title()){
+                map.setCenter(markers[i].position);
+            }
+            else {
+                markers[i].setMap(null);
+            }
+        }
 
-    };
+        //Get yelpName and foursquareId to run getApiInfo
+        var yelpName = clickedRestaurant.yelpFormat();
+        var foursquareId = clickedRestaurant.foursquare_id();
+
+        //function from yelp&foursquareApi to show info for restaurant
+        getApiInfo(yelpName, foursquareId)
+
+    }
+
     //Reset list when restaurant is clicked
     self.restoreList = function() {
-      self.listVisible(!self.listVisible());
-        self.selectedRestaurant(null);
-        self.showBackButton(!self.showBackButton());
-        for (var i = 0; i < markers.length; i++) {
-      markers[i].setMap(map);
-      bounds.extend(markers[i].position);
-  }
-  map.fitBounds(bounds);
-clearApiInfo();
+        //hide back button and show restaurants
+        self.listVisible(!self.listVisible());
 
-    };
+        self.showBackButton(!self.showBackButton());
+        //clear selected restaurant
+        self.selectedRestaurant(null);
+
+        //put markers back for all locations
+        for (var i = 0; i < markers.length; i++) {
+            markers[i].setMap(map);
+            bounds.extend(markers[i].position);
+        }
+        map.fitBounds(bounds);
+        clearApiInfo();
+
+    }
 
 }
-
 
 
 vm = new ViewModel();

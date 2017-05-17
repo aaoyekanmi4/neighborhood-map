@@ -4,8 +4,15 @@ var markers = [];
 
 var map;
 
+
 //Constructor for Google map
 function initMap() {
+
+function focusOnMarker () {
+    populateInfoWindow(this, infowindow);
+    map.setCenter(this.position);
+}
+
 
 
 //Night mode map style
@@ -134,7 +141,12 @@ function initMap() {
       id: i
     });
 
+    //Create info window
+    infowindow = new google.maps.InfoWindow();
 
+
+    //Show window and set center when a marker is clicked
+    marker.addListener("click", focusOnMarker);
 
     // Push the marker to our array of markers.
     markers.push(marker);
@@ -144,19 +156,14 @@ function initMap() {
 
     map.fitBounds(bounds);
 
-    //Create info window
-      infowindow = new google.maps.InfoWindow();
 
-   //Show window and set center when a marker is clicked
-    marker.addListener('click', function() {
 
-        populateInfoWindow(this, infowindow)
-        map.setCenter(this.position);
-    });
 
   };
 
 };
+
+
 
 
 

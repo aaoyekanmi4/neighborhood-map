@@ -1,4 +1,3 @@
-//function to create infowindow above marker
 function populateInfoWindow(marker, infowindow) {
 
     // Check to make sure the infowindow is not already opened on this marker.
@@ -15,6 +14,8 @@ function populateInfoWindow(marker, infowindow) {
 }
 
 
+
+
 //Make ko observables for members of locations object in model.js
 var Restaurant = function (data){
     this.title = ko.observable(data.title);
@@ -23,8 +24,8 @@ var Restaurant = function (data){
     this.street= ko.observable(data.street);
     this.cityCountry = ko.observable(data.cityCountry);
     this.yelpFormat = ko.observable(data.yelpFormat);
-    this.foursquare_id = ko.observable(data.foursquare_id)
-}
+    this.foursquare_id = ko.observable(data.foursquare_id);
+};
 
 //viewmodel for knockout
 var ViewModel = function () {
@@ -51,20 +52,20 @@ var ViewModel = function () {
     self.startBounce = function (place){
         for (var i = 0; i < markers.length; i++) {
             if (markers[i].title === place.title()){
-                markers[i].setAnimation(google.maps.Animation.BOUNCE)
-                populateInfoWindow(markers[i], infowindow)
+                markers[i].setAnimation(google.maps.Animation.BOUNCE);
+                populateInfoWindow(markers[i], infowindow);
             }
         }
-    }
+    };
 
     //for mouseout
     self.stopBounce = function (place){
         for (var i = 0; i < markers.length; i++) {
             if (markers[i].title === place.title()){
-                markers[i].setAnimation(null)
+                markers[i].setAnimation(null);
             }
         }
-    }
+    };
 
 //Function to determine restaurant list and markers shown based on value in filter input box
     self.generateList = ko.computed(function() {
@@ -83,25 +84,18 @@ var ViewModel = function () {
                 self.restaurantList().push( new Restaurant (location));
             });
 
-            return self.restaurantList()
+            return self.restaurantList();
 
         }
 
         else {
-            var filteredRestaurants = []
+            var filteredRestaurants = [];
 
             locations.forEach(function (location) {
 
-                var lowerCaseValue = self.filterValue().toLowerCase();
+                for (var i = 0; i < markers.length; i++) {
 
-                var lowerCaseTitle = location.title.toLowerCase();
-
-                if (lowerCaseTitle.startsWith(lowerCaseValue) == true) {
-                    filteredRestaurants.push(new Restaurant (location));
-
-                    for (var i = 0; i < markers.length; i++) {
-                        var markerTitle = markers[i].title.toLowerCase();
-                        if (markerTitle.startsWith(lowerCaseValue) == true ){
+                        if (markers[i].title === location.title ){
 
                             markers[i].setMap(map);
                             bounds.extend(markers[i].position);
@@ -109,20 +103,28 @@ var ViewModel = function () {
                         }
                     }
 
+                var lowerCaseValue = self.filterValue().toLowerCase();
+
+                var lowerCaseTitle = location.title.toLowerCase();
+
+                if (lowerCaseTitle.startsWith(lowerCaseValue) === true) {
+                    filteredRestaurants.push(new Restaurant (location));
+
+
                 }
 
                 else {
-                    for (var i = 0; i < markers.length; i++) {
-                        var markerTitle = markers[i].title.toLowerCase();
+                    for (var j = 0; j < markers.length; j++) {
+                        var markerTitle = markers[j].title.toLowerCase();
                         if (markerTitle.startsWith(lowerCaseValue) !== true ){
-                            markers[i].setMap(null);
+                            markers[j].setMap(null);
                         }
                     }
                 }
             });
 
             self.restaurantList(filteredRestaurants);
-            return self.restaurantList()
+            return self.restaurantList();
         }
     });
 
@@ -138,7 +140,7 @@ var ViewModel = function () {
         self.filterValue("");
 
         //use ko observable with "with" binding to view info for clicked location
-        self.selectedRestaurant(clickedRestaurant)
+        self.selectedRestaurant(clickedRestaurant);
 
         //show marker of clicked location only
         for (var i = 0; i < markers.length; i++) {
@@ -155,9 +157,9 @@ var ViewModel = function () {
         var foursquareId = clickedRestaurant.foursquare_id();
 
         //function from yelp&foursquareApi to show info for restaurant
-        getApiInfo(yelpName, foursquareId)
+        getApiInfo(yelpName, foursquareId);
 
-    }
+    };
 
     //Reset list when restaurant is clicked
     self.restoreList = function() {
@@ -176,13 +178,12 @@ var ViewModel = function () {
         map.fitBounds(bounds);
         clearApiInfo();
 
-    }
+    };
 
-}
+};
 
 
 vm = new ViewModel();
 
 ko.applyBindings(vm);
-
 

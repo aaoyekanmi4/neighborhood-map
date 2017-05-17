@@ -13,8 +13,20 @@ function focusOnMarker () {
     map.setCenter(this.position);
 }
 
+function populateInfoWindow(marker, infowindow) {
 
+    // Check to make sure the infowindow is not already opened on this marker.
+    if (infowindow.marker != marker) {
+        infowindow.marker = marker;
+        infowindow.setContent("<div>" + marker.title + "</div><div>" + marker.street +"</div>");
+        infowindow.open(map, marker);
 
+        // Make sure the marker property is cleared if the infowindow is closed.
+        infowindow.addListener("closeclick", function() {
+          infowindow.marker = null;
+        });
+    }
+}
 //Night mode map style
   var styledMapType = new google.maps.StyledMapType(
     [{elementType: 'geometry', stylers: [{color: '#242f3e'}]},

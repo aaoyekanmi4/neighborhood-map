@@ -14,8 +14,6 @@ function populateInfoWindow(marker, infowindow) {
 }
 
 
-
-
 //Make ko observables for members of locations object in model.js
 var Restaurant = function (data){
     this.title = ko.observable(data.title);
@@ -176,6 +174,7 @@ var ViewModel = function () {
             bounds.extend(markers[i].position);
         }
         map.fitBounds(bounds);
+        //function from yelp&foursquareApi to clear restaurant info
         clearApiInfo();
 
     };

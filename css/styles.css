@@ -160,13 +160,17 @@ button[type=submit] {
     overflow: auto;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 800px) {
 
 #map {
     height: 300px;
     width: 100%;
     position: relative;
 
+}
+
+#title-bar {
+    text-align: center;
 }
 #panel {
     width:100%;
@@ -181,7 +185,6 @@ button[type=submit] {
 
 #title-bar{
     font-size:12px;
-    text-align: center;
     height: 75px;
 }
 #panel {

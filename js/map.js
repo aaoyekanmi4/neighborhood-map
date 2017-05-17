@@ -1,4 +1,3 @@
-
 // Array for the markers on the map
 var markers = [];
 
@@ -156,7 +155,6 @@ function populateInfoWindow(marker, infowindow) {
     //Create info window
     infowindow = new google.maps.InfoWindow();
 
-
     //Show window and set center when a marker is clicked
     marker.addListener("click", focusOnMarker);
 
@@ -165,15 +163,11 @@ function populateInfoWindow(marker, infowindow) {
 
     bounds.extend(markers[i].position);
 
-
     map.fitBounds(bounds);
 
+  }
 
-
-
-  };
-
-};
+}
 
 
 

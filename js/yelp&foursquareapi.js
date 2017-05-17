@@ -1,3 +1,4 @@
+/*jshint multistr:true */
 
 //yelp oauth requirements
 //code from MarkN Udacity Coach
@@ -72,12 +73,14 @@ function getApiInfo(yelpName, foursquareId) {
             $("#category").append('Category: ' + category);
 
 
-             $("#selected-name").append('<img id="rating" src="' + overallRating + '">');
-             $("#phone").append('<div id="phone"> Phone: ' + phone +'</div>');
+            $("#selected-name").append('<img id="rating" src="' + overallRating + '">');
+            $("#phone").append('<div id="phone"> Phone: ' + phone +'</div>');
 
 
-            $("#yelp-review").append('<h3>Featured Yelp<sup><i class="fa fa-yelp" aria-hidden="true"></i></sup> Review:</h3><div id="excerpt">' + review + '<a href="' + url + '" target="_blank" id="order"> Read more at Yelp...</a></div><div id="username">- ' + user +'</div><div class="user-rating">' + user + " 's" + ' rating: <img class="user-rating" src="' +
-                userRating + '"></div>');
+            $("#yelp-review").append('<h3>Featured Yelp<sup><i class="fa fa-yelp" aria-hidden="true"></i></sup> Review:</h3>\
+                <div id="excerpt">'+ review + '<a href="' + url + '" target="_blank" id="order"> Read more at Yelp...</a>\
+                </div><div id="username">- '+ user +'</div><div class="user-rating">\
+                ' + user + " 's" + ' rating: <img class="user-rating" src="' + userRating + '"></div>');
             //get rid of signature so it can be added next call
             delete parameters.oauth_signature;
 
@@ -102,7 +105,8 @@ function getApiInfo(yelpName, foursquareId) {
             }
 
             $("#price-range").append('Price Range: ' + priceRange);
-            $("#menu").append('<form action="' + menu + '" target="_blank"><button id="menu-button" type="submit">View Menu <i class="fa fa-cutlery" aria-hidden="true"></i></button></form>');
+            $("#menu").append('<form action="' + menu +
+                '" target="_blank"><button id="menu-button" type="submit">View Menu <i class="fa fa-cutlery" aria-hidden="true"></i></button></form>');
             $("#foursquare").append('<h3><i class="fa fa-foursquare" aria-hidden="true"></i> Featured foursquare tips:</h3>');
 
             for (var i = 0; i < 5; i++){

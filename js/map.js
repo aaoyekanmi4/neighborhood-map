@@ -3,15 +3,6 @@ var markers = [];
 
 var map;
 
-
-//Constructor for Google map
-function initMap() {
-
-function focusOnMarker () {
-    populateInfoWindow(this, infowindow);
-    map.setCenter(this.position);
-}
-
 function populateInfoWindow(marker, infowindow) {
 
     // Check to make sure the infowindow is not already opened on this marker.
@@ -26,6 +17,16 @@ function populateInfoWindow(marker, infowindow) {
         });
     }
 }
+
+function focusOnMarker () {
+    populateInfoWindow(this, infowindow);
+    map.setCenter(this.position);
+}
+
+//Constructor for Google map
+function initMap() {
+
+
 //Night mode map style
   var styledMapType = new google.maps.StyledMapType(
     [{elementType: 'geometry', stylers: [{color: '#242f3e'}]},
@@ -179,47 +180,48 @@ $("#right-panel").hide();
 
 //Functions for directions
 var getThere = function() {
-  directionsTo(directionsService, directionsDisplay);
+    directionsTo(directionsService, directionsDisplay);
 };
 var getBack = function(){
-  directionsFrom(directionsService, directionsDisplay);
+    directionsFrom(directionsService, directionsDisplay);
 };
+
 document.getElementById('get-directions-to').addEventListener('click', getThere);
 document.getElementById('get-directions-from').addEventListener('click', getBack);
 
 //Close out direction panel when go back button clicked
 $("#back-to-list").click(function(){
-  $("#right-panel").animate({width:'toggle'},350);
-  $("#panel").animate({width:'toggle'},350);
-  directionsDisplay.setDirections({routes: []});
-  for (var i = 0; i < markers.length; i++) {
-    markers[i].setMap(map);
-    bounds.extend(markers[i].position);
-  }
-  map.fitBounds(bounds);
+    $("#right-panel").animate({width:'toggle'},350);
+    $("#panel").animate({width:'toggle'},350);
+    directionsDisplay.setDirections({routes: []});
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(map);
+        bounds.extend(markers[i].position);
+    }
+    map.fitBounds(bounds);
 });
 
 //Get directions from a restaurant to an entered lcocation
 function directionsFrom(directionsService, directionsDisplay) {
-  var start = document.getElementById('directionsfrom-start').value;
-  for (var i = 0; i < markers.length; i++) {
+    var start = document.getElementById('directionsfrom-start').value;
+    for (var i = 0; i < markers.length; i++) {
     markers[i].setMap(null);
-  }
-  var end = document.getElementById('directionsfrom-end').value;
-  directionsService.route({
-    origin: start,
-    destination: end,
-    travelMode: 'DRIVING'
-  }, function(response, status) {
-  if (status === 'OK') {
-  directionsDisplay.setDirections(response);
-  $("#right-panel").animate({width:'toggle'},350);
-  $("#panel").animate({width:'toggle'},350);
-  } else {
-  window.alert('Directions request failed due to ' + status);
-  }
-  });
-  }
+    }
+    var end = document.getElementById('directionsfrom-end').value;
+    directionsService.route({
+        origin: start,
+        destination: end,
+        travelMode: 'DRIVING'
+    }, function(response, status) {
+    if (status === 'OK') {
+        directionsDisplay.setDirections(response);
+        $("#right-panel").animate({width:'toggle'},350);
+        $("#panel").animate({width:'toggle'},350);
+    } else {
+        window.alert('Directions request failed due to ' + status);
+    }
+    });
+}
 
 //Get directions to a restaurant from an entered location
   function directionsTo(directionsService, directionsDisplay) {

@@ -1,0 +1,3 @@
+[submodule "js/oauth-signature-js"]
+	path = js/oauth-signature-js
+	url = https://github.com/bettiolo/oauth-signature-js.git

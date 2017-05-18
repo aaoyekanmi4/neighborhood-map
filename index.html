@@ -24,6 +24,76 @@
             <input type="text" class=" filter" id="filter" name="filter" data-bind="textInput: filterValue"  />
           </li>
           <hr>
+            <li>
+            <h3 class="find">
+              Directions to...
+              <i class="fa fa-plus towards " aria-hidden="true"></i>
+            </h3>
+            <table class="go-to">
+              <tr>
+                <td>
+                  <strong class=" find">From: </strong>
+                </td>
+                <td>
+                  <input type="text" class=" find" name="filter" id="directions2-start" placeholder="Enter starting address">
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong class="find">To: </strong>
+                </td>
+                <td>
+                  <select class="find" id="directions2-end" data-bind="foreach: generateList">
+                    <option class="place-to" data-bind="text: title, attr: {value: address}"></option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td>
+
+                </td>
+                <td>
+                  <button id="get-directions-to">Get Directions</button>
+                </td>
+              </tr>
+            </table>
+          </li>
+          <hr>
+          <li>
+            <h3 class="find">
+              Directions from...
+              <i class="fa fa-plus away" aria-hidden="true"></i>
+            </h3>
+            <table class="get-from">
+              <tr>
+                <td>
+                  <strong class="find">From: </strong>
+                </td>
+                <td>
+                  <select class="find" id="directionsfrom-start" data-bind="foreach: generateList">
+                    <option class="place-to" data-bind="text: title, attr: {value: address}"></option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong class=" find">To: </strong>
+                </td>
+                <td>
+                  <input type="text" class=" find" id="directionsfrom-end" name="filter" placeholder="Enter ending address">
+                </td>
+              </tr>
+              <tr>
+                <td>
+
+                </td>
+                <td>
+                  <button id="get-directions-from">Get Directions</button>
+                </td>
+              </tr>
+            </table>
+          </li>
+          <hr>
 
 
           <li id="instructions">
@@ -57,12 +127,16 @@
           <ul id="tips-list"></ul>
         </div>
       </div>
+       <div id="right-panel">
+        <button id="back-to-list">Go Back</button>
+      </div>
 
       <div id="map"></div>
     </div>
 
 
     <script src="http://knockoutjs.com/downloads/knockout-3.4.2.js" type="text/javascript"></script>
+    <script src ="js/toggleDirections.js"></script>
     <script src="js/map.js"></script>
     <script src="js/yelp&foursquareapi.js"></script>
     <script src="js/viewModel.js"></script>

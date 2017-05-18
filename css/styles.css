@@ -174,12 +174,13 @@ button[type=submit] {
 #title-bar {
     text-align: center;
 }
+#right-panel,
 #panel {
     width:100%;
     float:none;
     bottom: 0;
     position: absolute;
-    top: 350px;
+    top: 375px;
     overflow: visible;
 }
 }
@@ -189,8 +190,6 @@ button[type=submit] {
     font-size:12px;
     height: 75px;
 }
-#panel {
-top: 375px;
-}
-}
+
+
 

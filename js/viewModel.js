@@ -23,13 +23,18 @@ var Restaurant = function (data){
     this.cityCountry = ko.observable(data.cityCountry);
     this.yelpFormat = ko.observable(data.yelpFormat);
     this.foursquare_id = ko.observable(data.foursquare_id);
+    this.address = ko.observable(data.street + ", " + data.cityCountry)
+
 };
+
 
 //viewmodel for knockout
 var ViewModel = function () {
 
     //setting self variable to refer to viewmodel
     var self = this;
+
+
 
     //create observable with value in filter input box set to blank
     self.filterValue = ko.observable("");
@@ -79,6 +84,7 @@ var ViewModel = function () {
 
             //create new restaurant using restaurant variable and push into restaurant list array
             locations.forEach(function (location) {
+
                 self.restaurantList().push( new Restaurant (location));
             });
 

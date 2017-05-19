@@ -46,13 +46,13 @@ var locations = [{
           yelpFormat: "franklin-barbecue-austin",
           foursquare_id:"4d755f73fc766a314d778d1a"
         },{
-          title: "Las Trancas",
-          location: {lat: 30.259979,lng: -97.731734},
-          imgSrc:"https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcStCD6mnVHZq9OWsPCcPbSazalkaLbbm6AEyY7my0Q1aPvjhYCs",
-          street:"1210 E Cesar Chavez St",
-          cityCountry:"Austin, TX 78702, USA",
-          yelpFormat: "las-trancas-austin",
-          foursquare_id:"4f564a74e4b0a4bae630cc4e"
+          title: "Gourdough's",
+          location: {lat: 30.249512, lng: -97.754808},
+          imgSrc:"https://assets3.thrillist.com/v1/image/634307/size/tl-horizontal_main.jpg",
+          street:"1503 S 1st St",
+          cityCountry:"Austin, TX 78704, USA",
+          yelpFormat: "gourdoughs-austin",
+          foursquare_id:"4f0680e7a69ddfbc9c2d475c"
         },{
           title: "Cabo Bob's",
           location: {lat: 30.221002, lng:-97.757019},
@@ -66,7 +66,7 @@ var locations = [{
           location: {lat: 30.249225, lng:-97.749515},
           imgSrc:"https://cmga360dining.files.wordpress.com/2015/09/tmc-xlpizzahomeslicepephear.jpg?w=640&h=427",
           street:"1415 S Congress St",
-          cityCountry:"Austin, TX 78704",
+          cityCountry:"Austin, TX 78704, USA",
           yelpFormat: "home-slice-pizza-austin",
           foursquare_id: "43d1d4e9f964a520072e1fe3"
         },{
@@ -78,11 +78,11 @@ var locations = [{
           yelpFormat: "casa-garcias-austin-3",
           foursquare_id:"4b2e5371f964a52054de24e3"
         },{
-            title:"Habernero Mexican Cafe",
-            location: {lat: 30.241227, lng: -97.758236},
-            imgSrc:"https://media-cdn.tripadvisor.com/media/photo-s/03/54/0a/01/habanero-mexican-cafe.jpg",
-            street:"501 W Oltorf St",
-            cityCountry:"Austin, TX 78704, USA",
+          title:"Habernero Mexican Cafe",
+          location: {lat: 30.241227, lng: -97.758236},
+          imgSrc:"https://media-cdn.tripadvisor.com/media/photo-s/03/54/0a/01/habanero-mexican-cafe.jpg",
+          street:"501 W Oltorf St",
+          cityCountry:"Austin, TX 78704, USA",
           yelpFormat: "habanero-mexican-cafe-austin",
           foursquare_id:"4a957fa2f964a5206c2320e3"
           }];

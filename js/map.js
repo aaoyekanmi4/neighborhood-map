@@ -21,6 +21,9 @@ function populateInfoWindow(marker, infowindow) {
 function focusOnMarker () {
     populateInfoWindow(this, infowindow);
     map.setCenter(this.position);
+    this.setAnimation(google.maps.Animation.BOUNCE);
+    ViewModel.generateList();
+
 }
 
 //Constructor for Google map

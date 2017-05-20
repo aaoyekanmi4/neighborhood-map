@@ -35,7 +35,7 @@ var ViewModel = function () {
     //functions to animate marker's location on hover of restaurant name
     //place refers to a particular restaurant in restaurant list
 
-    //for mouseover
+    //animation when  name in list is clicked
     self.startBounce = function (place){
         for (var i = 0; i < markers.length; i++) {
             if (markers[i].title === place.title()){
@@ -45,14 +45,6 @@ var ViewModel = function () {
         }
     };
 
-    //for mouseout
-    self.stopBounce = function (place){
-        for (var i = 0; i < markers.length; i++) {
-            if (markers[i].title === place.title()){
-                markers[i].setAnimation(null);
-            }
-        }
-    };
 
 //Function to determine restaurant list and markers shown based on value in filter input box
     self.generateList = ko.computed(function() {
@@ -130,6 +122,9 @@ var ViewModel = function () {
         //use ko observable with "with" binding to view info for clicked location
         self.selectedRestaurant(clickedRestaurant);
 
+        //animate marker on click
+
+        self.startBounce(clickedRestaurant)
         //show marker of clicked location only
         for (var i = 0; i < markers.length; i++) {
             if (markers[i].title === clickedRestaurant.title()){

@@ -107,7 +107,7 @@
         <hr>
 
         <ul id="restaurant-list" data-bind="visible: listVisible, foreach: generateList">
-          <li class="restaurant-name" data-bind="text: title, click: $parent.changeRestaurant, event: { mouseover: $parent.startBounce, mouseout: $parent.stopBounce }""></li>
+          <li class="restaurant-name" data-bind="text: title, click: $parent.changeRestaurant"></li>
           <hr class="list">
         </ul>
 

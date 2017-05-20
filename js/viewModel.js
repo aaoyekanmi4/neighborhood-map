@@ -1,16 +1,3 @@
-//Make ko observables for members of locations object in model.js
-var Restaurant = function (data){
-    this.title = ko.observable(data.title);
-    this.location = ko.observable(data.location);
-    this.imgSrc = ko.observable(data.imgSrc);
-    this.street= ko.observable(data.street);
-    this.cityCountry = ko.observable(data.cityCountry);
-    this.yelpFormat = ko.observable(data.yelpFormat);
-    this.foursquare_id = ko.observable(data.foursquare_id);
-    this.address = ko.observable(data.street + ", " + data.cityCountry)
-
-};
-
 
 //viewmodel for knockout
 var ViewModel = function () {
@@ -60,8 +47,10 @@ var ViewModel = function () {
 
             //create new restaurant using restaurant variable and push into restaurant list array
             locations.forEach(function (location) {
+                //Create address for directions API
+                location.address = location.street + "," + location.cityCountry
 
-                self.restaurantList().push( new Restaurant (location));
+                self.restaurantList().push(location);
             });
 
             return self.restaurantList();
@@ -72,7 +61,7 @@ var ViewModel = function () {
             var filteredRestaurants = [];
 
             locations.forEach(function (location) {
-
+                location.address = location.street + "," + location.cityCountry
                 for (var i = 0; i < markers.length; i++) {
 
                         if (markers[i].title === location.title ){
@@ -88,7 +77,7 @@ var ViewModel = function () {
                 var lowerCaseTitle = location.title.toLowerCase();
 
                 if (lowerCaseTitle.startsWith(lowerCaseValue) === true) {
-                    filteredRestaurants.push(new Restaurant (location));
+                    filteredRestaurants.push(location);
 
 
                 }
@@ -127,7 +116,7 @@ var ViewModel = function () {
         self.startBounce(clickedRestaurant)
         //show marker of clicked location only
         for (var i = 0; i < markers.length; i++) {
-            if (markers[i].title === clickedRestaurant.title()){
+            if (markers[i].title === clickedRestaurant.title){
                 map.setCenter(markers[i].position);
             }
             else {
@@ -136,8 +125,8 @@ var ViewModel = function () {
         }
 
         //Get yelpName and foursquareId to run getApiInfo
-        var yelpName = clickedRestaurant.yelpFormat();
-        var foursquareId = clickedRestaurant.foursquare_id();
+        var yelpName = clickedRestaurant.yelpFormat;
+        var foursquareId = clickedRestaurant.foursquare_id;
 
         //function from yelp&foursquareApi to show info for restaurant
         getApiInfo(yelpName, foursquareId);

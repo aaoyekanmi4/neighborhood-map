@@ -46,6 +46,14 @@ var locations = [{
           yelpFormat: "franklin-barbecue-austin",
           foursquare_id:"4d755f73fc766a314d778d1a"
         },{
+          title: "Las Trancas",
+          location: {lat: 30.259979,lng: -97.731734},
+          imgSrc:"https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcStCD6mnVHZq9OWsPCcPbSazalkaLbbm6AEyY7my0Q1aPvjhYCs",
+          street:"1210 E Cesar Chavez St",
+          cityCountry:"Austin, TX 78702, USA",
+          yelpFormat: "las-trancas-austin",
+          foursquare_id:"4f564a74e4b0a4bae630cc4e"
+        },{
           title: "Gourdough's",
           location: {lat: 30.249512, lng: -97.754808},
           imgSrc:"https://assets3.thrillist.com/v1/image/634307/size/tl-horizontal_main.jpg",

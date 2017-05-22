@@ -3,6 +3,15 @@ var markers = [];
 
 var map;
 
+function changeRestaurant(marker){
+  locations.forEach(function (location) {
+  if (this.title === location.title) {
+    console.log(this.title);
+    vm.changeRestaurant(location);
+}
+});
+}
+
 function populateInfoWindow(marker, infowindow) {
 
     // Check to make sure the infowindow is not already opened on this marker.
@@ -18,12 +27,11 @@ function populateInfoWindow(marker, infowindow) {
     }
 }
 
-function focusOnMarker () {
+function focusOnMarker (marker) {
     populateInfoWindow(this, infowindow);
     map.setCenter(this.position);
     this.setAnimation(google.maps.Animation.BOUNCE);
-    ViewModel.generateList();
-
+vm.changeRestaurant(this)
 }
 
 //Constructor for Google map
@@ -142,6 +150,9 @@ function initMap() {
     var title = locations[i].title;
     var street = locations[i].street;
     var imgSrc = locations[i].imgSrc;
+    var cityCountry = locations[i].cityCountry;
+    var yelpFormat = locations[i].yelpFormat;
+    var foursquare_id = locations[i].foursquare_id;
 
 
 
@@ -151,6 +162,9 @@ function initMap() {
       position: position,
       title: title,
       street: street,
+      cityCountry: cityCountry,
+      yelpFormat: yelpFormat,
+      foursquare_id: foursquare_id,
       imgSrc: imgSrc,
       animation: google.maps.Animation.DROP,
       id: i

@@ -23,9 +23,9 @@ var ViewModel = function () {
     //place refers to a particular restaurant in restaurant list
 
     //animation when  name in list is clicked
-    self.startBounce = function (place){
+    self.startBounce = function (location){
         for (var i = 0; i < markers.length; i++) {
-            if (markers[i].title === place.title()){
+            if (markers[i].title === location.title){
                 markers[i].setAnimation(google.maps.Animation.BOUNCE);
                 populateInfoWindow(markers[i], infowindow);
             }

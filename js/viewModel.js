@@ -5,6 +5,12 @@ var ViewModel = function () {
     //setting self variable to refer to viewmodel
     var self = this;
     self.category = ko.observable();
+    self.title = ko.observable();
+    self.street = ko.observable();
+    self.cityCountry = ko.observable();
+    self.imgSrc = ko.observable();
+    self.overallRating = ko.observable();
+    self.phone = ko.observable();
 
 
 
@@ -18,7 +24,7 @@ var ViewModel = function () {
     self.showBackButton = ko.observable(false);
 
     //variable for restaurant when clicked
-    self.selectedRestaurant = ko.observable();
+    // self.selectedRestaurant = ko.observable();
 
     //functions to animate marker's location on hover of restaurant name
     //place refers to a particular restaurant in restaurant list
@@ -109,8 +115,10 @@ var ViewModel = function () {
         //Set value in filter to blank
         self.filterValue("");
 
+
+
         //use ko observable with "with" binding to view info for clicked location
-        self.selectedRestaurant(clickedRestaurant);
+        // self.selectedRestaurant(clickedRestaurant);
 
         //animate marker on click
 
@@ -126,6 +134,11 @@ var ViewModel = function () {
         }
 
         //Get yelpName and foursquareId to run getApiInfo
+        self.title(clickedRestaurant.title);
+        self.street(clickedRestaurant.street);
+        self.cityCountry(clickedRestaurant.cityCountry);
+        self.imgSrc(clickedRestaurant.imgSrc);
+
         var yelpName = clickedRestaurant.yelpFormat;
         var foursquareId = clickedRestaurant.foursquare_id;
 
@@ -141,7 +154,7 @@ var ViewModel = function () {
 
         self.showBackButton(!self.showBackButton());
         //clear selected restaurant
-        self.selectedRestaurant(null);
+        // self.selectedRestaurant(null);
 
         //put markers back for all locations
         for (var i = 0; i < markers.length; i++) {

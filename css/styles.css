@@ -106,8 +106,9 @@ li.restaurant-name,
     width: 100%;
 }
 
-img#featured-food {
+#featured-food {
     width: 250px;
+    height: 200px;
 }
 
 #filter {

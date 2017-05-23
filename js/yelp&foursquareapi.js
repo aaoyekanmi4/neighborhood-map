@@ -70,11 +70,11 @@ function getApiInfo(yelpName, foursquareId) {
             var user = response.reviews[0].user.name || "Reviewer's name not provided";
             var userRating = response.reviews[0].rating_image_small_url || "Reviewer's rating not available";
 
-            $("#category").append('Category: ' + category);
+            vm.category('Category: ' + category);
 
 
-            $("#selected-name").append('<img id="rating" src="' + overallRating + '">');
-            $("#phone").append('<div id="phone"> Phone: ' + phone +'</div>');
+            vm.overallRating(overallRating);
+            vm.phone('Phone: ' + phone);
 
 
             $("#yelp-review").append('<h3>Featured Yelp<sup><i class="fa fa-yelp" aria-hidden="true"></i></sup> Review:</h3>\

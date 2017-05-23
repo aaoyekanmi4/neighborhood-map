@@ -4,6 +4,7 @@ var ViewModel = function () {
 
     //setting self variable to refer to viewmodel
     var self = this;
+    self.category = ko.observable();
 
 
 

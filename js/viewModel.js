@@ -4,6 +4,8 @@ var ViewModel = function () {
 
     //setting self variable to refer to viewmodel
     var self = this;
+
+    //observables to show each restaurant's details
     self.category = ko.observable();
     self.title = ko.observable();
     self.street = ko.observable();
@@ -11,8 +13,12 @@ var ViewModel = function () {
     self.imgSrc = ko.observable();
     self.overallRating = ko.observable();
     self.phone = ko.observable();
-
-
+    self.review = ko.observable();
+    self.hours = ko.observable();
+    self.priceRange = ko.observable();
+    self.menu = ko.observable();
+    self.foursquareHeading = ko.observable();
+    self.tipsList = ko.observableArray();
 
     //create observable with value in filter input box set to blank
     self.filterValue = ko.observable("");
@@ -153,8 +159,9 @@ var ViewModel = function () {
         self.listVisible(!self.listVisible());
 
         self.showBackButton(!self.showBackButton());
+
         //clear selected restaurant
-        // self.selectedRestaurant(null);
+
 
         //put markers back for all locations
         for (var i = 0; i < markers.length; i++) {
@@ -162,8 +169,8 @@ var ViewModel = function () {
             bounds.extend(markers[i].position);
         }
         map.fitBounds(bounds);
-        //function from yelp&foursquareApi to clear restaurant info
-        clearApiInfo();
+        //clear restaurant info
+        //
 
     };
 

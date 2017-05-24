@@ -114,23 +114,25 @@
         </ul>
 
         <button id="back" data-bind="visible: showBackButton, click: restoreList">Back</button>
-        <!-- <div id="show-restaurant" data-bind="with: selectedRestaurant"> -->
+        <div id="show-restaurant">
           <h1 id="selected-name" data-bind="text: title">
 
           </h1>
            <img id="rating" src="" data-bind="attr: {src: overallRating}">
-          <div id="hours"></div>
+          <div id="hours" data-bind="text:hours"></div>
           <br>
           <div data-bind="text: street"></div>
           <div data-bind="text: cityCountry"></div>
           <div id="phone" data-bind="text:phone"></div>
           <img id="featured-food" src="" data-bind="attr: {src: imgSrc}">
           <div id="category" data-bind="text:category"></div>
-          <div id="price-range"></div>
-          <div id="menu"></div>
-          <div id="yelp-review"></div>
-          <div id="foursquare"></div>
-          <ul id="tips-list"></ul>
+          <div id="price-range" data-bind="text:priceRange"></div>
+          <div id="menu" data-bind="html: menu"></div>
+          <div id="yelp-review" data-bind="html: review"></div>
+          <div id="foursquare" data-bind="html:foursquareHeading"></div>
+          <ul id="tips-list" data-bind="foreach:tipsList">
+          <li data-bind="html:tip"></li>
+          </ul>
           <div id="error"></div>
        <!--  </div> -->
       </div>

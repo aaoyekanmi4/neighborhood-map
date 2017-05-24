@@ -62,6 +62,7 @@ function getApiInfo(yelpName, foursquareId) {
         dataType: 'jsonp',
         cache: true,
         success: function(response) {
+            //Gather restaurant details from json object and handle errors for each one
             var category = response.categories[0][0] || "Category not available";
             var overallRating = response.rating_img_url || "Yelp rating not available";
             var phone = response.display_phone || "No phone number available";
@@ -70,17 +71,16 @@ function getApiInfo(yelpName, foursquareId) {
             var user = response.reviews[0].user.name || "Reviewer's name not provided";
             var userRating = response.reviews[0].rating_image_small_url || "Reviewer's rating not available";
 
+
+           //Put information on page using ko viewModel data binding
             vm.category('Category: ' + category);
-
-
             vm.overallRating(overallRating);
             vm.phone('Phone: ' + phone);
-
-
-            $("#yelp-review").append('<h3>Featured Yelp<sup><i class="fa fa-yelp" aria-hidden="true"></i></sup> Review:</h3>\
+            vm.review('<h3>Featured Yelp<sup><i class="fa fa-yelp" aria-hidden="true"></i></sup> Review:</h3>\
                 <div id="excerpt">'+ review + '<a href="' + url + '" target="_blank" id="order"> Read more at Yelp...</a>\
                 </div><div id="username">- '+ user +'</div><div class="user-rating">\
                 ' + user + " 's" + ' rating: <img class="user-rating" src="' + userRating + '"></div>');
+
             //get rid of signature so it can be added next call
             delete parameters.oauth_signature;
 
@@ -116,24 +116,29 @@ function getApiInfo(yelpName, foursquareId) {
         url: foursquareUrl,
         dataType:'jsonp',
         success: function(data) {
+
             (data.response.venue.hours) ? status= data.response.venue.hours.status: status = "Open status not available.";
             var priceRange = data.response.venue.price.message || "Price range not available";
              (data.response.venue.menu) ? menu = data.response.venue.menu.url: menu = 'Menu not available for this restaurant';
             var tips = data.response.venue.tips.groups[0].items || "Foursquare tips not available";
 
 
-                $("#hours").append(status);
+               vm.hours(status);
 
-            $("#price-range").append('Price Range: ' + priceRange);
+            vm.priceRange('Price Range: ' + priceRange)
 if (data.response.venue.menu) {
-            $("#menu").append('<form action="' + menu +
+            vm.menu('<form action="' + menu +
                 '" target="_blank"><button id="menu-button" type="submit">View Menu <i class="fa fa-cutlery" aria-hidden="true"></i></button></form>');
 }
-            $("#foursquare").append('<h3><i class="fa fa-foursquare" aria-hidden="true"></i> Featured foursquare tips:</h3>');
+            vm.foursquareHeading('<h3><i class="fa fa-foursquare" aria-hidden="true"></i> Featured foursquare tips:</h3>');
 
             for (var i = 0; i < 5; i++){
-                $("#tips-list").append('<li><p>' + tips[i].text + '</p><p>Likes: ' + tips[i].agreeCount +'</p></li>');
+
+                vm.tipsList.push({tip: '<p>' + tips[i].text + '</p><p>Likes: ' + tips[i].agreeCount +'</p>'});
+
             }
+
+
 //Comprehnsive error functioning by user palash
             //http://stackoverflow.com/questions/6792878/jquery-ajax-error-function
 

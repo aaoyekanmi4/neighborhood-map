@@ -164,8 +164,3 @@ if (data.response.venue.menu) {
     });
 }
 
-function clearApiInfo () {
-    $("#area").text('');
-    $("#foursquare").text('');
-    $("#tips-list").text('');
-}

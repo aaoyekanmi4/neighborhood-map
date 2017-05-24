@@ -114,7 +114,7 @@
         </ul>
 
         <button id="back" data-bind="visible: showBackButton, click: restoreList">Back</button>
-        <div id="show-restaurant">
+        <div id="show-restaurant" data-bind="visible: detailsVisible">
           <h1 id="selected-name" data-bind="text: title">
 
           </h1>
@@ -124,7 +124,7 @@
           <div data-bind="text: street"></div>
           <div data-bind="text: cityCountry"></div>
           <div id="phone" data-bind="text:phone"></div>
-          <img id="featured-food" src="" data-bind="attr: {src: imgSrc}">
+          <img id="featured-food"  src="" data-bind="attr: {src: imgSrc}">
           <div id="category" data-bind="text:category"></div>
           <div id="price-range" data-bind="text:priceRange"></div>
           <div id="menu" data-bind="html: menu"></div>
@@ -134,7 +134,7 @@
           <li data-bind="html:tip"></li>
           </ul>
           <div id="error"></div>
-       <!--  </div> -->
+        </div>
       </div>
 
        <div id="right-panel">

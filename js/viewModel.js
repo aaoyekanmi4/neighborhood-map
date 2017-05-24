@@ -26,14 +26,14 @@ var ViewModel = function () {
     //set restaurant list's visibility to true
     self.listVisible = ko.observable(true);
 
+    //set individual restaurant visiblity to false
+    self.detailsVisible = ko.observable(false);
+
+
+
     //set back buttons visibilty to false
     self.showBackButton = ko.observable(false);
 
-    //variable for restaurant when clicked
-    // self.selectedRestaurant = ko.observable();
-
-    //functions to animate marker's location on hover of restaurant name
-    //place refers to a particular restaurant in restaurant list
 
     //animation when  name in list is clicked
     self.startBounce = function (location){
@@ -46,7 +46,7 @@ var ViewModel = function () {
     };
 
 
-//Function to determine restaurant list and markers shown based on value in filter input box
+    //Function to determine restaurant list and markers shown based on value in filter input box
     self.generateList = ko.computed(function() {
 
         if (self.filterValue() === ""){
@@ -116,19 +116,22 @@ var ViewModel = function () {
 
         //hide other restaurants and show back button
         self.listVisible(!self.listVisible());
+
+        //show restaurant details div
+        self.detailsVisible(!self.detailsVisible());
+
+
+
         self.showBackButton(!self.showBackButton());
+
+
 
         //Set value in filter to blank
         self.filterValue("");
 
-
-
-        //use ko observable with "with" binding to view info for clicked location
-        // self.selectedRestaurant(clickedRestaurant);
-
         //animate marker on click
+        self.startBounce(clickedRestaurant);
 
-        self.startBounce(clickedRestaurant)
         //show marker of clicked location only
         for (var i = 0; i < markers.length; i++) {
             if (markers[i].title === clickedRestaurant.title){
@@ -161,7 +164,12 @@ var ViewModel = function () {
         self.showBackButton(!self.showBackButton());
 
         //clear selected restaurant
+        self.detailsVisible(!self.detailsVisible());
 
+
+
+        //clear foursquare tips list
+        self.tipsList([]);
 
         //put markers back for all locations
         for (var i = 0; i < markers.length; i++) {
@@ -169,8 +177,8 @@ var ViewModel = function () {
             bounds.extend(markers[i].position);
         }
         map.fitBounds(bounds);
-        //clear restaurant info
-        //
+
+
 
     };
 

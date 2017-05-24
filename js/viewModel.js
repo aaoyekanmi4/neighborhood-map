@@ -20,6 +20,9 @@ var ViewModel = function () {
     self.foursquareHeading = ko.observable();
     self.tipsList = ko.observableArray();
 
+    //observable for map error
+    self.mapError = ko.observable();
+
     //create observable with value in filter input box set to blank
     self.filterValue = ko.observable("");
 
@@ -115,14 +118,14 @@ var ViewModel = function () {
     self.changeRestaurant = function(clickedRestaurant) {
 
         //hide other restaurants and show back button
-        self.listVisible(!self.listVisible());
+        self.listVisible(false);
 
         //show restaurant details div
-        self.detailsVisible(!self.detailsVisible());
+        self.detailsVisible(true);
 
 
 
-        self.showBackButton(!self.showBackButton());
+        self.showBackButton(true);
 
 
 

@@ -132,11 +132,18 @@ if (data.response.venue.menu) {
 }
             vm.foursquareHeading('<h3><i class="fa fa-foursquare" aria-hidden="true"></i> Featured foursquare tips:</h3>');
 
+            var chosenTips = []
+
             for (var i = 0; i < 5; i++){
 
-                vm.tipsList.push({tip: '<p>' + tips[i].text + '</p><p>Likes: ' + tips[i].agreeCount +'</p>'});
+                chosenTips.push({tip: '<p>' + tips[i].text + '</p><p>Likes: ' + tips[i].agreeCount +'</p>'});
 
             }
+            var firstFive = chosenTips.slice(0,5);
+            vm.tipsList(firstFive)
+
+
+
 
 
 //Comprehnsive error functioning by user palash

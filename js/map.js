@@ -185,6 +185,11 @@ function initMap() {
 
   }
 
+//Code from Udacity review
+  google.maps.event.addDomListener(window, 'resize', function() {
+  map.fitBounds(bounds); // `bounds` is a `LatLngBounds` object
+});
+
 //Variables for directions
 var directionsDisplay = new google.maps.DirectionsRenderer();
 var directionsService = new google.maps.DirectionsService();

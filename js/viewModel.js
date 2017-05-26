@@ -24,15 +24,13 @@ var ViewModel = function () {
     self.mapError = ko.observable();
 
     //create observable with value in filter input box set to blank
-    self.filterValue = ko.observable("");
+    self.filterValue = ko.observable('');
 
     //set restaurant list's visibility to true
     self.listVisible = ko.observable(true);
 
     //set individual restaurant visiblity to false
     self.detailsVisible = ko.observable(false);
-
-
 
     //set back buttons visibilty to false
     self.showBackButton = ko.observable(false);
@@ -47,12 +45,19 @@ var ViewModel = function () {
             }
         }
     };
+    //stop animation when back button clicked
+     self.stopBounce = function (){
+        for (var i = 0; i < markers.length; i++) {
+                markers[i].setAnimation(null);
+
+        }
+    };
 
 
     //Function to determine restaurant list and markers shown based on value in filter input box
     self.generateList = ko.computed(function() {
 
-        if (self.filterValue() === ""){
+        if (self.filterValue() === ''){
 
             self.restaurantList = ko.observableArray([]);
 
@@ -64,7 +69,7 @@ var ViewModel = function () {
             //create new restaurant using restaurant variable and push into restaurant list array
             locations.forEach(function (location) {
                 //Create address for directions API
-                location.address = location.street + "," + location.cityCountry
+                location.address = location.street + ',' + location.cityCountry
 
                 self.restaurantList().push(location);
             });
@@ -77,7 +82,7 @@ var ViewModel = function () {
             var filteredRestaurants = [];
 
             locations.forEach(function (location) {
-                location.address = location.street + "," + location.cityCountry
+                location.address = location.street + ',' + location.cityCountry
                 for (var i = 0; i < markers.length; i++) {
 
                         if (markers[i].title === location.title ){
@@ -130,7 +135,7 @@ var ViewModel = function () {
 
 
         //Set value in filter to blank
-        self.filterValue("");
+        self.filterValue('');
 
         //animate marker on click
         self.startBounce(clickedRestaurant);
@@ -141,7 +146,7 @@ var ViewModel = function () {
                 map.setCenter(markers[i].position);
             }
             else {
-                markers[i].setMap(null);
+                markers[i].setVisible(false);
             }
         }
 
@@ -175,11 +180,16 @@ var ViewModel = function () {
         self.tipsList([]);
 
         //put markers back for all locations
-        for (var i = 0; i < markers.length; i++) {
-            markers[i].setMap(map);
+            for (var i = 0; i < markers.length; i++) {
+            markers[i].setVisible(true);
             bounds.extend(markers[i].position);
         }
         map.fitBounds(bounds);
+
+
+        //stop bounce animation
+        self.stopBounce();
+
 
 
 

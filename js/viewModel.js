@@ -20,6 +20,10 @@ var ViewModel = function () {
     self.foursquareHeading = ko.observable();
     self.tipsList = ko.observableArray();
 
+    //observables for error messages
+    self.foursquareMsg = ko.observable();
+    self.yelpMsg = ko.observable();
+
     //observable for map error
     self.mapError = ko.observable();
 
@@ -39,24 +43,26 @@ var ViewModel = function () {
     self.showBackButton = ko.observable(false);
 
     //Functions for directions
-self.getThere = function() {
-    directionsTo(directionsService, directionsDisplay);
-};
-self.getBack = function(){
-    directionsFrom(directionsService, directionsDisplay);
-};
+    self.getThere = function() {
+        directionsTo(directionsService, directionsDisplay);
+    };
 
-self.backToList= function (){
+    self.getBack = function(){
+        directionsFrom(directionsService, directionsDisplay);
+    };
 
-    $("#right-panel").animate({width:'toggle'},350);
-    $("#panel").animate({width:'toggle'},350);
-    directionsDisplay.setDirections({routes: []});
-    for (var i = 0; i < markers.length; i++) {
-        markers[i].setMap(map);
-        bounds.extend(markers[i].position);
-    }
-    map.fitBounds(bounds);
-};
+    //Function for returning from directions panel
+    self.backToList= function (){
+
+        $("#right-panel").animate({width:'toggle'},350);
+        $("#panel").animate({width:'toggle'},350);
+        directionsDisplay.setDirections({routes: []});
+        for (var i = 0; i < markers.length; i++) {
+            markers[i].setMap(map);
+            bounds.extend(markers[i].position);
+        }
+        map.fitBounds(bounds);
+    };
 
 
     //animation when  name in list is clicked
@@ -68,14 +74,14 @@ self.backToList= function (){
             }
         }
     };
+
     //stop animation when back button clicked
      self.stopBounce = function (){
         for (var i = 0; i < markers.length; i++) {
-                markers[i].setAnimation(null);
+            markers[i].setAnimation(null);
 
         }
     };
-
 
     //Function to determine restaurant list and markers shown based on value in filter input box
     self.generateList = ko.computed(function() {
@@ -92,7 +98,7 @@ self.backToList= function (){
             //create new restaurant using restaurant variable and push into restaurant list array
             locations.forEach(function (location) {
                 //Create address for directions API
-                location.address = location.street + ',' + location.cityCountry
+                location.address = location.street + ',' + location.cityCountry;
 
                 self.restaurantList().push(location);
             });
@@ -105,16 +111,17 @@ self.backToList= function (){
             var filteredRestaurants = [];
 
             locations.forEach(function (location) {
-                location.address = location.street + ',' + location.cityCountry
+                location.address = location.street + ',' + location.cityCountry;
+
                 for (var i = 0; i < markers.length; i++) {
 
-                        if (markers[i].title === location.title ){
+                    if (markers[i].title === location.title ){
 
-                            markers[i].setMap(map);
-                            bounds.extend(markers[i].position);
-                            map.fitBounds(bounds);
-                        }
+                        markers[i].setMap(map);
+                        bounds.extend(markers[i].position);
+                        map.fitBounds(bounds);
                     }
+                }
 
                 var lowerCaseValue = self.filterValue().toLowerCase();
 
@@ -151,11 +158,7 @@ self.backToList= function (){
         //show restaurant details div
         self.detailsVisible(true);
 
-
-
         self.showBackButton(true);
-
-
 
         //Set value in filter to blank
         self.filterValue('');
@@ -197,8 +200,6 @@ self.backToList= function (){
         //clear selected restaurant
         self.detailsVisible(!self.detailsVisible());
 
-
-
         //clear foursquare tips list
         self.tipsList([]);
 
@@ -209,17 +210,12 @@ self.backToList= function (){
         }
         map.fitBounds(bounds);
 
-
         //stop bounce animation
         self.stopBounce();
-
-
-
 
     };
 
 };
-
 
 vm = new ViewModel();
 

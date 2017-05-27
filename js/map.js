@@ -1,22 +1,15 @@
+var map;
+
 // Array for the markers on the map
 var markers = [];
 
-var map;
 
+//variables to display directions
 var directionsDisplay;
 var directionsService;
 
-function changeRestaurant(marker){
-  locations.forEach(function (location) {
-  if (this.title === location.title) {
-    console.log(this.title);
-    vm.changeRestaurant(location);
-}
-});
-}
 
-
-//Get directions from a restaurant to an entered lcocation
+//Get directions from a restaurant to an entered location
 function directionsFrom(directionsService, directionsDisplay) {
     var start = document.getElementById('directionsfrom-start').value;
     for (var i = 0; i < markers.length; i++) {
@@ -39,27 +32,28 @@ function directionsFrom(directionsService, directionsDisplay) {
 }
 
 //Get directions to a restaurant from an entered location
-  function directionsTo(directionsService, directionsDisplay) {
-  var start = document.getElementById('directions2-start').value;
-  for (var i = 0; i < markers.length; i++) {
-    markers[i].setMap(null);
-  }
-  var end = document.getElementById('directions2-end').value;
-  directionsService.route({
-    origin: start,
-    destination: end,
-    travelMode: 'DRIVING'
-  }, function(response, status) {
-    if (status === 'OK') {
-      directionsDisplay.setDirections(response);
-
-       $("#right-panel").animate({width:'toggle'},350);
-       $("#panel").animate({width:'toggle'},350);
-
-    } else {
-      window.alert('Directions request failed due to ' + status);
+function directionsTo(directionsService, directionsDisplay) {
+    var start = document.getElementById('directions2-start').value;
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(null);
     }
-  });
+    var end = document.getElementById('directions2-end').value;
+    directionsService.route({
+        origin: start,
+        destination: end,
+        travelMode: 'DRIVING'
+    },
+    function(response, status) {
+        if (status === 'OK') {
+            directionsDisplay.setDirections(response);
+
+            $("#right-panel").animate({width:'toggle'},350);
+            $("#panel").animate({width:'toggle'},350);
+
+        } else {
+            window.alert('Directions request failed due to ' + status);
+        }
+    });
 }
 
 function populateInfoWindow(marker, infowindow) {
@@ -72,16 +66,27 @@ function populateInfoWindow(marker, infowindow) {
 
         // Make sure the marker property is cleared if the infowindow is closed.
         infowindow.addListener("closeclick", function() {
-          infowindow.marker = null;
+            infowindow.marker = null;
         });
     }
 }
 
+//function to show details when marker is clicked
+function changeRestaurant(marker){
+    locations.forEach(function (location) {
+    if (this.title === location.title) {
+        console.log(this.title);
+        vm.changeRestaurant(location);
+    }
+    });
+}
+
+//group of functions for marker click event
 function focusOnMarker (marker) {
     populateInfoWindow(this, infowindow);
     map.setCenter(this.position);
     this.setAnimation(google.maps.Animation.BOUNCE);
-vm.changeRestaurant(this)
+    vm.changeRestaurant(this);
 }
 
 //Constructor for Google map
@@ -89,7 +94,7 @@ function initMap() {
 
 
 //Night mode map style
-  var styledMapType = new google.maps.StyledMapType(
+    var styledMapType = new google.maps.StyledMapType(
     [{elementType: 'geometry', stylers: [{color: '#242f3e'}]},
     {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
     {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
@@ -173,12 +178,12 @@ function initMap() {
 );
 
 
-  // Create a map object, and include the MapTypeId to add to the map type control.
-  map = new google.maps.Map(document.getElementById('map'), {
+    // Create a map object, and include the MapTypeId to add to the map type control.
+    map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 30.2672, lng: -97.7431},
     zoom: 13,
     mapTypeControlOptions: {
-      mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain',
+    mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain',
               'styled_map']
     }
   });
@@ -233,12 +238,13 @@ function initMap() {
 
     map.fitBounds(bounds);
 
-  }
 
+}
 //Code from Udacity review
   google.maps.event.addDomListener(window, 'resize', function() {
   map.fitBounds(bounds); // `bounds` is a `LatLngBounds` object
 });
+
 
 //Variables for directions
 directionsDisplay = new google.maps.DirectionsRenderer();

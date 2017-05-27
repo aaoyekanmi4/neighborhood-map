@@ -2,7 +2,6 @@
 
 //yelp oauth requirements
 //code from MarkN Udacity Coach
-
 var consumerKey = "Vdul4_EpXvHQ96eVwrU--Q";
 var consumerSecret = "cK44a_oWkG_oWJT5g87hdrAN04I";
 var token = "JgFGGfp6V_mELb-qEzhraebx0EBFyrp-";
@@ -50,11 +49,14 @@ var CLIENT_SECRET = "0RO45WSUF510UQ11IFJUXOXS1CO2GMKU3SBDD25CI1I1A4Y3";
 //AJAX calls for Yelp and Foursquare
 
 function getApiInfo(yelpName, foursquareId) {
- // generate yelpUrl for business using yelp format business name
+
+    //generate yelpUrl for business using yelp format business name
     var yelpUrl = "https://api.yelp.com/v2/business/" + yelpName + "?actionlinks=True";
+
     // generate oauth signature
     var encodedSignature = oauthSignature.generate('GET', yelpUrl, parameters, consumerSecret, tokenSecret);
     parameters.oauth_signature = encodedSignature;
+
     //get data from Yelp and append to page
     $.ajax({
         url: yelpUrl,
@@ -84,28 +86,28 @@ function getApiInfo(yelpName, foursquareId) {
             //get rid of signature so it can be added next call
             delete parameters.oauth_signature;
 
-            },
-            //Comprehnsive error functioning by user palash
-            //http://stackoverflow.com/questions/6792878/jquery-ajax-error-function
-            error: function (jqXHR, exception) {
-        var msg = '';
-        if (jqXHR.status === 0) {
-            msg = 'Not connected.\n Verify Network.';
-        } else if (jqXHR.status == 404) {
-            msg = 'Yelp info not found. [404]';
-        } else if (jqXHR.status == 500) {
-            msg = 'Yelp Server Error [500].';
-        } else if (exception === 'parsererror') {
-            msg = 'Data requested incorrectly (parserror)';
-        } else if (exception === 'timeout') {
-            msg = 'Time out error.';
-        } else if (exception === 'abort') {
-            msg = 'Ajax request aborted.';
-        } else {
-            msg = 'Uncaught Error.\n' + jqXHR.responseText;
-        }
-        $('#error').html(msg);
-    },
+        },
+        //Comprehnsive error functioning by stackoverflow user palash
+        //http://stackoverflow.com/questions/6792878/jquery-ajax-error-function
+        error: function (jqXHR, exception) {
+            var msg = '';
+            if (jqXHR.status === 0) {
+                msg = 'Not connected.\n Verify Network.';
+            } else if (jqXHR.status == 404) {
+                msg = 'Yelp info not found. [404]';
+            } else if (jqXHR.status == 500) {
+                msg = 'Yelp Server Error [500].';
+            } else if (exception === 'parsererror') {
+                msg = 'Data requested incorrectly (parserror)';
+            } else if (exception === 'timeout') {
+                msg = 'Time out error.';
+            } else if (exception === 'abort') {
+                msg = 'Ajax request aborted.';
+            } else {
+                msg = 'Uncaught Error.\n' + jqXHR.responseText;
+            }
+            vm.yelpMsg(msg);
+        },
     });
     //get venue id and generate foursquare url for venue detail API
     var version = foursquareVersion();
@@ -119,20 +121,21 @@ function getApiInfo(yelpName, foursquareId) {
 
             (data.response.venue.hours) ? status= data.response.venue.hours.status: status = "Open status not available.";
             var priceRange = data.response.venue.price.message || "Price range not available";
-             (data.response.venue.menu) ? menu = data.response.venue.menu.url: menu = 'Menu not available for this restaurant';
+            (data.response.venue.menu) ? menu = data.response.venue.menu.url: menu = 'Menu not available for this restaurant';
             var tips = data.response.venue.tips.groups[0].items || "Foursquare tips not available";
 
+            vm.hours(status);
 
-               vm.hours(status);
+            vm.priceRange('Price Range: ' + priceRange);
 
-            vm.priceRange('Price Range: ' + priceRange)
-if (data.response.venue.menu) {
-            vm.menu('<form action="' + menu +
-                '" target="_blank"><button id="menu-button" type="submit">View Menu <i class="fa fa-cutlery" aria-hidden="true"></i></button></form>');
-}
+            if (data.response.venue.menu) {
+                vm.menu('<form action="' + menu +
+                    '" target="_blank"><button id="menu-button" type="submit">View Menu <i class="fa fa-cutlery" aria-hidden="true"></i></button></form>');
+            }
+
             vm.foursquareHeading('<h3><i class="fa fa-foursquare" aria-hidden="true"></i> Featured foursquare tips:</h3>');
 
-            var chosenTips = []
+            var chosenTips = [];
 
             for (var i = 0; i < 5; i++){
 
@@ -140,34 +143,27 @@ if (data.response.venue.menu) {
 
             }
             var firstFive = chosenTips.slice(0,5);
-            vm.tipsList(firstFive)
-
-
-
-
-
-//Comprehnsive error functioning by user palash
-            //http://stackoverflow.com/questions/6792878/jquery-ajax-error-function
-
-        },     error: function (jqXHR, exception) {
-        var msg = '';
-        if (jqXHR.status === 0) {
-            msg = 'Not connected.\n Verify Network.';
-        } else if (jqXHR.status == 404) {
-            msg = 'Foursquare info not found. [404]';
-        } else if (jqXHR.status == 500) {
-            msg = 'Foursquare Server Error [500].';
-        } else if (exception === 'parsererror') {
-            msg = 'Data requested incorrectly (parserror)';
-        } else if (exception === 'timeout') {
-            msg = 'Time out error.';
-        } else if (exception === 'abort') {
-            msg = 'Ajax request aborted.';
-        } else {
-            msg = 'Uncaught Error.\n' + jqXHR.responseText;
-        }
-        $('#error').html(msg);
-    },
+            vm.tipsList(firstFive);
+        },
+        error: function (jqXHR, exception) {
+            var msg = '';
+            if (jqXHR.status === 0) {
+                msg = 'Not connected.\n Verify Network.';
+            }
+            else if (jqXHR.status == 404) {
+                msg = 'Foursquare info not found. [404]';
+            } else if (jqXHR.status == 500) {
+                msg = 'Foursquare Server Error [500].';
+            } else if (exception === 'parsererror') {
+                msg = 'Data requested incorrectly (parserror)';
+            } else if (exception === 'timeout') {
+                msg = 'Time out error.';
+            } else if (exception === 'abort') {
+                msg = 'Ajax request aborted.';
+            } else {
+                msg = 'Uncaught Error.\n' + jqXHR.responseText;
+            }
+            vm.foursquareMsg(msg);
+        },
     });
 }
-

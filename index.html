@@ -10,11 +10,13 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 
   </head>
-  <body>
-    <div id="title-bar">
 
+  <body>
+
+    <div id="title-bar">
       <h1>Places to Eat in South Austin</h1>
     </div>
+
     <hr id="first-hr">
     <div id="panel-map">
       <div id="panel">
@@ -112,15 +114,14 @@
 
         <button id="back" data-bind="visible: showBackButton, click: restoreList">Back</button>
         <div id="show-restaurant" data-bind="visible: detailsVisible">
-          <h1 id="selected-name" data-bind="text: title">
-
-          </h1>
-           <img id="rating" src="" data-bind="attr: {src: overallRating}">
+          <h1 id="selected-name" data-bind="text: title"></h1>
+          <img id="rating" src="" data-bind="attr: {src: overallRating}">
           <div id="hours" data-bind="text:hours"></div>
           <br>
           <div data-bind="text: street"></div>
           <div data-bind="text: cityCountry"></div>
           <div id="phone" data-bind="text:phone"></div>
+          <div id ="yelp-error" data-bind="text: yelpMsg"></div>
           <img id="featured-food"  src="" data-bind="attr: {src: imgSrc}">
           <div id="category" data-bind="text:category"></div>
           <div id="price-range" data-bind="text:priceRange"></div>
@@ -128,25 +129,25 @@
           <div id="yelp-review" data-bind="html: review"></div>
           <div id="foursquare" data-bind="html:foursquareHeading"></div>
           <ul id="tips-list" data-bind="foreach:tipsList">
-          <li data-bind="html:tip"></li>
+            <li data-bind="html:tip"></li>
           </ul>
-          <div id="error"></div>
+          <div id="foursquare-error" data-bind="text:foursquareMsg"></div>
         </div>
       </div>
 
-       <div id="right-panel" data-bind="visible:showDirections">
+      <div id="right-panel" data-bind="visible:showDirections">
         <button id="back-to-list" data-bind="click: backToList">Go Back</button>
       </div>
 
       <div id="map" data-bind="text: mapError"></div>
     </div>
 
-     <script
-  src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous"></script>
-   <script src="https://use.fontawesome.com/6791ba42d9.js"></script>
-   <script src="js/oauth-signature-js/dist/oauth-signature.min.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+      crossorigin="anonymous"></script>
+    <script src="https://use.fontawesome.com/6791ba42d9.js"></script>
+    <script src="js/oauth-signature-js/dist/oauth-signature.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js" type="text/javascript"></script>
     <script src="js/model.js"></script>
     <script src ="js/toggleDirections.js"></script>
@@ -155,8 +156,8 @@
     <script src="js/viewModel.js"></script>
     <script src="js/mapError.js" type="text/javascript"></script>
     <script async defer
-        src=
-        "https://maps.googleapis.com/maps/api/js?key=AIzaSyA5tTf9CYQpNJS4fzHJ2xHPbqlblu9c3PY&libraries=geometry&v=3&callback=initMap" onerror=mapError()>
+      src=
+      "https://maps.googleapis.com/maps/api/js?key=AIzaSyA5tTf9CYQpNJS4fzHJ2xHPbqlblu9c3PY&libraries=geometry&v=3&callback=initMap" onerror=mapError()>
     </script>
 
   </body>

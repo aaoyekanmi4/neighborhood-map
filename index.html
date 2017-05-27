@@ -55,7 +55,7 @@
 
                 </td>
                 <td>
-                  <button id="get-directions-to">Get Directions</button>
+                  <button id="get-directions-to" data-bind="click: getThere">Get Directions</button>
                 </td>
               </tr>
             </table>
@@ -90,7 +90,7 @@
 
                 </td>
                 <td>
-                  <button id="get-directions-from">Get Directions</button>
+                  <button id="get-directions-from" data-bind="click: getBack">Get Directions</button>
                 </td>
               </tr>
             </table>
@@ -135,7 +135,7 @@
       </div>
 
        <div id="right-panel" data-bind="visible:showDirections">
-        <button id="back-to-list">Go Back</button>
+        <button id="back-to-list" data-bind="click: backToList">Go Back</button>
       </div>
 
       <div id="map" data-bind="text: mapError"></div>

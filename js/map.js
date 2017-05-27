@@ -3,6 +3,9 @@ var markers = [];
 
 var map;
 
+var directionsDisplay;
+var directionsService;
+
 function changeRestaurant(marker){
   locations.forEach(function (location) {
   if (this.title === location.title) {
@@ -10,6 +13,53 @@ function changeRestaurant(marker){
     vm.changeRestaurant(location);
 }
 });
+}
+
+
+//Get directions from a restaurant to an entered lcocation
+function directionsFrom(directionsService, directionsDisplay) {
+    var start = document.getElementById('directionsfrom-start').value;
+    for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(null);
+    }
+    var end = document.getElementById('directionsfrom-end').value;
+    directionsService.route({
+        origin: start,
+        destination: end,
+        travelMode: 'DRIVING'
+    }, function(response, status) {
+    if (status === 'OK') {
+        directionsDisplay.setDirections(response);
+        $("#right-panel").animate({width:'toggle'},350);
+        $("#panel").animate({width:'toggle'},350);
+    } else {
+        window.alert('Directions request failed due to ' + status);
+    }
+    });
+}
+
+//Get directions to a restaurant from an entered location
+  function directionsTo(directionsService, directionsDisplay) {
+  var start = document.getElementById('directions2-start').value;
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(null);
+  }
+  var end = document.getElementById('directions2-end').value;
+  directionsService.route({
+    origin: start,
+    destination: end,
+    travelMode: 'DRIVING'
+  }, function(response, status) {
+    if (status === 'OK') {
+      directionsDisplay.setDirections(response);
+
+       $("#right-panel").animate({width:'toggle'},350);
+       $("#panel").animate({width:'toggle'},350);
+
+    } else {
+      window.alert('Directions request failed due to ' + status);
+    }
+  });
 }
 
 function populateInfoWindow(marker, infowindow) {
@@ -191,84 +241,11 @@ function initMap() {
 });
 
 //Variables for directions
-var directionsDisplay = new google.maps.DirectionsRenderer();
-var directionsService = new google.maps.DirectionsService();
+directionsDisplay = new google.maps.DirectionsRenderer();
+directionsService = new google.maps.DirectionsService();
 
 directionsDisplay.setMap(map);
 directionsDisplay.setPanel(document.getElementById('right-panel'));
-
-//Hide directions panel
-$("#right-panel").hide();
-
-//Functions for directions
-var getThere = function() {
-    directionsTo(directionsService, directionsDisplay);
-};
-var getBack = function(){
-    directionsFrom(directionsService, directionsDisplay);
-};
-
-document.getElementById('get-directions-to').addEventListener('click', getThere);
-document.getElementById('get-directions-from').addEventListener('click', getBack);
-
-//Close out direction panel when go back button clicked
-$("#back-to-list").click(function(){
-    $("#right-panel").animate({width:'toggle'},350);
-    $("#panel").animate({width:'toggle'},350);
-    directionsDisplay.setDirections({routes: []});
-    for (var i = 0; i < markers.length; i++) {
-        markers[i].setMap(map);
-        bounds.extend(markers[i].position);
-    }
-    map.fitBounds(bounds);
-});
-
-//Get directions from a restaurant to an entered lcocation
-function directionsFrom(directionsService, directionsDisplay) {
-    var start = document.getElementById('directionsfrom-start').value;
-    for (var i = 0; i < markers.length; i++) {
-    markers[i].setMap(null);
-    }
-    var end = document.getElementById('directionsfrom-end').value;
-    directionsService.route({
-        origin: start,
-        destination: end,
-        travelMode: 'DRIVING'
-    }, function(response, status) {
-    if (status === 'OK') {
-        directionsDisplay.setDirections(response);
-        $("#right-panel").animate({width:'toggle'},350);
-        $("#panel").animate({width:'toggle'},350);
-    } else {
-        window.alert('Directions request failed due to ' + status);
-    }
-    });
-}
-
-//Get directions to a restaurant from an entered location
-  function directionsTo(directionsService, directionsDisplay) {
-  var start = document.getElementById('directions2-start').value;
-  for (var i = 0; i < markers.length; i++) {
-    markers[i].setMap(null);
-  }
-  var end = document.getElementById('directions2-end').value;
-  directionsService.route({
-    origin: start,
-    destination: end,
-    travelMode: 'DRIVING'
-  }, function(response, status) {
-    if (status === 'OK') {
-      directionsDisplay.setDirections(response);
-
-       $("#right-panel").animate({width:'toggle'},350);
-       $("#panel").animate({width:'toggle'},350);
-
-    } else {
-      window.alert('Directions request failed due to ' + status);
-    }
-  });
-}
-
 
 }
 

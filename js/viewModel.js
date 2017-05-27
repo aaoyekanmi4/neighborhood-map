@@ -32,8 +32,31 @@ var ViewModel = function () {
     //set individual restaurant visiblity to false
     self.detailsVisible = ko.observable(false);
 
+    //set Directions panels visibility to false
+    self.showDirections = ko.observable(false);
+
     //set back buttons visibilty to false
     self.showBackButton = ko.observable(false);
+
+    //Functions for directions
+self.getThere = function() {
+    directionsTo(directionsService, directionsDisplay);
+};
+self.getBack = function(){
+    directionsFrom(directionsService, directionsDisplay);
+};
+
+self.backToList= function (){
+
+    $("#right-panel").animate({width:'toggle'},350);
+    $("#panel").animate({width:'toggle'},350);
+    directionsDisplay.setDirections({routes: []});
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(map);
+        bounds.extend(markers[i].position);
+    }
+    map.fitBounds(bounds);
+};
 
 
     //animation when  name in list is clicked

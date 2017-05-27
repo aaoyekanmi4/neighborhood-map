@@ -181,13 +181,22 @@ button[type=submit] {
 #title-bar {
     text-align: center;
 }
-#right-panel,
+
 #panel {
     width:100%;
     float:none;
     bottom: 0;
     position: absolute;
     top: 375px;
+    overflow: visible;
+}
+
+#right-panel{
+    width:100%;
+    float:none;
+    bottom: 0;
+    top: 400px;
+    position: absolute;
     overflow: visible;
 }
 }

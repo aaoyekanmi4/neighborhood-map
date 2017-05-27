@@ -120,7 +120,7 @@ self.backToList= function (){
 
                 var lowerCaseTitle = location.title.toLowerCase();
 
-                if (lowerCaseTitle.startsWith(lowerCaseValue) === true) {
+                if (lowerCaseTitle.indexOf(lowerCaseValue) > -1) {
                     filteredRestaurants.push(location);
 
 
@@ -129,7 +129,7 @@ self.backToList= function (){
                 else {
                     for (var j = 0; j < markers.length; j++) {
                         var markerTitle = markers[j].title.toLowerCase();
-                        if (markerTitle.startsWith(lowerCaseValue) !== true ){
+                        if (markerTitle.indexOf(lowerCaseValue) === -1 ){
                             markers[j].setMap(null);
                         }
                     }
